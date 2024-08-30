@@ -1,0 +1,198 @@
+Factory Details:
+  Rank                     primary + 256 (512)
+  Long-name                NVENC HEVC Video Encoder
+  Klass                    Codec/Encoder/Video/Hardware
+  Description              Encode HEVC video streams using NVIDIA's hardware-accelerated NVENC encoder API
+  Author                   Tim-Philipp M?ller <tim@centricular.com>, Matthew Waters <matthew@centricular.com>, Seungha Yang <pudding8757@gmail.com>
+
+Plugin Details:
+  Name                     nvcodec
+  Description              GStreamer NVCODEC plugin
+  Filename                 /usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstnvcodec.so
+  Version                  1.20.3
+  License                  LGPL
+  Source module            gst-plugins-bad
+  Source release date      2022-06-15
+  Binary package           GStreamer Bad Plugins (Ubuntu)
+  Origin URL               https://launchpad.net/distros/ubuntu/+source/gst-plugins-bad1.0
+
+GObject
+ +----GInitiallyUnowned
+       +----GstObject
+             +----GstElement
+                   +----GstVideoEncoder
+                         +----GstNvBaseEnc
+                               +----GstNvDevice0H265Enc
+                                     +----GstNvH265Enc
+
+Implemented Interfaces:
+  GstPreset
+
+Pad Templates:
+  SINK template: 'sink'
+    Availability: Always
+    Capabilities:
+      video/x-raw
+                 format: { (string)NV12, (string)YV12, (string)I420, (string)BGRA, (string)RGBA, (string)Y444, (string)VUYA, (string)P010_10LE, (string)BGR10A2_LE, (string)RGB10A2_LE, (string)Y444_16LE }
+                  width: [ 129, 8192 ]
+                 height: [ 33, 8192 ]
+              framerate: [ 0/1, 2147483647/1 ]
+         interlace-mode: { (string)progressive }
+      video/x-raw(memory:GLMemory)
+                 format: { (string)NV12, (string)YV12, (string)I420, (string)BGRA, (string)RGBA, (string)Y444, (string)VUYA, (string)P010_10LE, (string)BGR10A2_LE, (string)RGB10A2_LE, (string)Y444_16LE }
+                  width: [ 129, 8192 ]
+                 height: [ 33, 8192 ]
+              framerate: [ 0/1, 2147483647/1 ]
+         interlace-mode: { (string)progressive }
+      video/x-raw(memory:CUDAMemory)
+                 format: { (string)NV12, (string)YV12, (string)I420, (string)BGRA, (string)RGBA, (string)Y444, (string)VUYA, (string)P010_10LE, (string)BGR10A2_LE, (string)RGB10A2_LE, (string)Y444_16LE }
+                  width: [ 129, 8192 ]
+                 height: [ 33, 8192 ]
+              framerate: [ 0/1, 2147483647/1 ]
+         interlace-mode: { (string)progressive }
+  
+  SRC template: 'src'
+    Availability: Always
+    Capabilities:
+      video/x-h265
+                  width: [ 129, 8192 ]
+                 height: [ 33, 8192 ]
+              framerate: [ 0/1, 2147483647/1 ]
+          stream-format: byte-stream
+              alignment: au
+                profile: { (string)main, (string)main-10, (string)main-444 }
+
+Element has no clocking capabilities.
+Element has no URI handling capabilities.
+
+Pads:
+  SINK: 'sink'
+    Pad Template: 'sink'
+  SRC: 'src'
+    Pad Template: 'src'
+
+Element Properties:
+  aq-strength         : Adaptive Quantization Strength when spatial-aq is enabled from 1 (low) to 15 (aggressive), (0 = autoselect)
+                        flags: readable, writable, changeable in NULL, READY, PAUSED or PLAYING state
+                        Unsigned Integer. Range: 0 - 15 Default: 0 
+  aud                 : Use AU (Access Unit) delimiter
+                        flags: readable, writable, changeable in NULL, READY, PAUSED or PLAYING state
+                        Boolean. Default: true
+  b-adapt             : Enable adaptive B-frame insert when lookahead is enabled
+                        flags: readable, writable, conditionally available, changeable only in NULL or READY state
+                        Boolean. Default: false
+  bframes             : Number of B-frames between I and P
+                        flags: readable, writable, conditionally available, changeable only in NULL or READY state
+                        Unsigned Integer. Range: 0 - 5 Default: 0 
+  bitrate             : Bitrate in kbit/sec (0 = from NVENC preset)
+                        flags: readable, writable, changeable in NULL, READY, PAUSED or PLAYING state
+                        Unsigned Integer. Range: 0 - 2048000 Default: 0 
+  const-quality       : Target Constant Quality level for VBR mode (0 = automatic)
+                        flags: readable, writable, changeable in NULL, READY, PAUSED or PLAYING state
+                        Double. Range:               0 -              51 Default:               0 
+  cuda-device-id      : Get the GPU device to use for operations
+                        flags: readable
+                        Unsigned Integer. Range: 0 - 4294967295 Default: 0 
+  gop-size            : Number of frames between intra frames (-1 = infinite)
+                        flags: readable, writable, changeable in NULL, READY, PAUSED or PLAYING state
+                        Integer. Range: -1 - 2147483647 Default: 75 
+  i-adapt             : Enable adaptive I-frame insert when lookahead is enabled
+                        flags: readable, writable, changeable only in NULL or READY state
+                        Boolean. Default: false
+  max-bitrate         : Maximum Bitrate in kbit/sec (ignored for CBR mode)
+                        flags: readable, writable, changeable in NULL, READY, PAUSED or PLAYING state
+                        Unsigned Integer. Range: 0 - 2048000 Default: 0 
+  min-force-key-unit-interval: Minimum interval between force-keyunit requests in nanoseconds
+                        flags: readable, writable
+                        Unsigned Integer64. Range: 0 - 18446744073709551615 Default: 0 
+  name                : The name of the object
+                        flags: readable, writable, 0x2000
+                        String. Default: "nvh265enc0"
+  nonref-p            : Automatic insertion of non-reference P-frames
+                        flags: readable, writable, changeable in NULL, READY, PAUSED or PLAYING state
+                        Boolean. Default: false
+  parent              : The parent of the object
+                        flags: readable, writable, 0x2000
+                        Object of type "GstObject"
+  preset              : Encoding Preset
+                        flags: readable, writable, changeable in NULL, READY, PAUSED or PLAYING state
+                        Enum "GstNvPreset" Default: 0, "default"
+                           (0): default          - Default
+                           (1): hp               - High Performance
+                           (2): hq               - High Quality
+                           (3): low-latency      - Low Latency
+                           (4): low-latency-hq   - Low Latency, High Quality
+                           (5): low-latency-hp   - Low Latency, High Performance
+                           (6): lossless         - Lossless
+                           (7): lossless-hp      - Lossless, High Performance
+  qos                 : Handle Quality-of-Service events from downstream
+                        flags: readable, writable
+                        Boolean. Default: false
+  qp-const            : Constant quantizer (-1 = from NVENC preset)
+                        flags: readable, writable, changeable in NULL, READY, PAUSED or PLAYING state
+                        Integer. Range: -1 - 51 Default: -1 
+  qp-const-b          : Constant QP value for B frame, When >= 0, "qp-const-i" and "qp-const-p" should be also >= 0. Overwritten by "qp-const" (-1 = from NVENC preset)
+                        flags: readable, writable, changeable in NULL, READY, PAUSED or PLAYING state
+                        Integer. Range: -1 - 51 Default: -1 
+  qp-const-i          : Constant QP value for I frame, When >= 0, "qp-const-p" and "qp-const-b" should be also >= 0. Overwritten by "qp-const" (-1 = from NVENC preset)
+                        flags: readable, writable, changeable in NULL, READY, PAUSED or PLAYING state
+                        Integer. Range: -1 - 51 Default: -1 
+  qp-const-p          : Constant QP value for P frame, When >= 0, "qp-const-i" and "qp-const-b" should be also >= 0. Overwritten by "qp-const" (-1 = from NVENC preset)
+                        flags: readable, writable, changeable in NULL, READY, PAUSED or PLAYING state
+                        Integer. Range: -1 - 51 Default: -1 
+  qp-max              : Maximum quantizer (-1 = from NVENC preset)
+                        flags: readable, writable, changeable in NULL, READY, PAUSED or PLAYING state
+                        Integer. Range: -1 - 51 Default: -1 
+  qp-max-b            : Maximum QP value for B frame, When >= 0, "qp-max-i" and "qp-max-p" should be also >= 0. Overwritten by "qp-max" (-1 = from NVENC preset)
+                        flags: readable, writable, changeable in NULL, READY, PAUSED or PLAYING state
+                        Integer. Range: -1 - 51 Default: -1 
+  qp-max-i            : Maximum QP value for I frame, When >= 0, "qp-max-p" and "qp-max-b" should be also >= 0. Overwritten by "qp-max" (-1 = from NVENC preset)
+                        flags: readable, writable, changeable in NULL, READY, PAUSED or PLAYING state
+                        Integer. Range: -1 - 51 Default: -1 
+  qp-max-p            : Maximum QP value for P frame, When >= 0, "qp-max-i" and "qp-max-b" should be also >= 0. Overwritten by "qp-max" (-1 = from NVENC preset)
+                        flags: readable, writable, changeable in NULL, READY, PAUSED or PLAYING state
+                        Integer. Range: -1 - 51 Default: -1 
+  qp-min              : Minimum quantizer (-1 = from NVENC preset)
+                        flags: readable, writable, changeable in NULL, READY, PAUSED or PLAYING state
+                        Integer. Range: -1 - 51 Default: -1 
+  qp-min-b            : Minimum QP value for B frame, When >= 0, "qp-min-i" and "qp-min-p" should be also >= 0. Overwritten by "qp-min" (-1 = from NVENC preset)
+                        flags: readable, writable, changeable in NULL, READY, PAUSED or PLAYING state
+                        Integer. Range: -1 - 51 Default: -1 
+  qp-min-i            : Minimum QP value for I frame, When >= 0, "qp-min-p" and "qp-min-b" should be also >= 0. Overwritten by "qp-min" (-1 = from NVENC preset)
+                        flags: readable, writable, changeable in NULL, READY, PAUSED or PLAYING state
+                        Integer. Range: -1 - 51 Default: -1 
+  qp-min-p            : Minimum QP value for P frame, When >= 0, "qp-min-i" and "qp-min-b" should be also >= 0. Overwritten by "qp-min" (-1 = from NVENC preset)
+                        flags: readable, writable, changeable in NULL, READY, PAUSED or PLAYING state
+                        Integer. Range: -1 - 51 Default: -1 
+  rc-lookahead        : Number of frames for frame type lookahead
+                        flags: readable, writable, conditionally available, changeable only in NULL or READY state
+                        Unsigned Integer. Range: 0 - 32 Default: 0 
+  rc-mode             : Rate Control Mode
+                        flags: readable, writable, changeable in NULL, READY, PAUSED or PLAYING state
+                        Enum "GstNvRCMode" Default: 0, "default"
+                           (0): default          - Default
+                           (1): constqp          - Constant Quantization
+                           (2): cbr              - Constant Bit Rate
+                           (3): vbr              - Variable Bit Rate
+                           (4): vbr-minqp        - Variable Bit Rate (with minimum quantization parameter, DEPRECATED)
+                           (5): cbr-ld-hq        - Low-Delay CBR, High Quality
+                           (6): cbr-hq           - CBR, High Quality (slower)
+                           (7): vbr-hq           - VBR, High Quality (slower)
+  spatial-aq          : Spatial Adaptive Quantization
+                        flags: readable, writable, changeable in NULL, READY, PAUSED or PLAYING state
+                        Boolean. Default: false
+  strict-gop          : Minimize GOP-to-GOP rate fluctuations
+                        flags: readable, writable, changeable in NULL, READY, PAUSED or PLAYING state
+                        Boolean. Default: false
+  temporal-aq         : Temporal Adaptive Quantization
+                        flags: readable, writable, conditionally available, changeable in NULL, READY, PAUSED or PLAYING state
+                        Boolean. Default: false
+  vbv-buffer-size     : VBV(HRD) Buffer Size in kbits (0 = NVENC default)
+                        flags: readable, writable, conditionally available, changeable only in NULL or READY state
+                        Unsigned Integer. Range: 0 - 4294967295 Default: 0 
+  weighted-pred       : Weighted Prediction
+                        flags: readable, writable, conditionally available, changeable in NULL, READY, PAUSED or PLAYING state
+                        Boolean. Default: false
+  zerolatency         : Zero latency operation (no reordering delay)
+                        flags: readable, writable, changeable in NULL, READY, PAUSED or PLAYING state
+                        Boolean. Default: false

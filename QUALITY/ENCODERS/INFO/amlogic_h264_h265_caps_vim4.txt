@@ -1,0 +1,95 @@
+Factory Details:
+  Rank                     primary (256)
+  Long-name                Amlogic h264/h265 Multi-Encoder
+  Klass                    Codec/Encoder/Video
+  Description              Amlogic h264/h265 Multi-Encoder Plugin
+  Author                   Jemy Zhang <jun.zhang@amlogic.com>
+
+Plugin Details:
+  Name                     amlvenc
+  Description              Amlogic h264/h265 encoder plugins
+  Filename                 /usr/lib/aarch64-linux-gnu/gstreamer-1.0/libgstamlvenc.so
+  Version                  1.0.0
+  License                  LGPL
+  Source module            aml_package
+  Binary package           amlogic h264/h265 encoding
+  Origin URL               http://openlinux.amlogic.com
+
+GObject
+ +----GInitiallyUnowned
+       +----GstObject
+             +----GstElement
+                   +----GstVideoEncoder
+                         +----GstAmlVEnc
+
+Implemented Interfaces:
+  GstPreset
+
+Pad Templates:
+  SINK template: 'sink'
+    Availability: Always
+    Capabilities:
+      video/x-raw
+              framerate: [ 0/1, 2147483647/1 ]
+                  width: [ 16, 2147483647 ]
+                 height: [ 16, 2147483647 ]
+                 format: { (string)NV12, (string)NV21, (string)I420, (string)YV12, (string)RGB, (string)BGR }
+  
+  SRC template: 'src'
+    Availability: Always
+    Capabilities:
+      video/x-h264
+              framerate: [ 0/1, 2147483647/1 ]
+                  width: [ 1, 2147483647 ]
+                 height: [ 1, 2147483647 ]
+          stream-format: { (string)byte-stream }
+              alignment: au
+                profile: { (string)high-4:4:4, (string)high-4:2:2, (string)high-10, (string)high, (string)main, (string)baseline, (string)constrained-baseline, (string)high-4:4:4-intra, (string)high-4:2:2-intra, (string)high-10-intra }
+      video/x-h265
+              framerate: [ 0/1, 2147483647/1 ]
+                  width: [ 1, 2147483647 ]
+                 height: [ 1, 2147483647 ]
+          stream-format: { (string)byte-stream }
+              alignment: au
+                profile: { (string)high-4:4:4, (string)high-4:2:2, (string)high-10, (string)high, (string)main, (string)baseline, (string)constrained-baseline, (string)high-4:4:4-intra, (string)high-4:2:2-intra, (string)high-10-intra }
+
+Element has no clocking capabilities.
+Element has no URI handling capabilities.
+
+Pads:
+  SINK: 'sink'
+    Pad Template: 'sink'
+  SRC: 'src'
+    Pad Template: 'src'
+
+Element Properties:
+  bitrate             : bitrate(kbps)
+                        flags: readable, writable
+                        Integer. Range: 0 - 12000 Default: 2000 
+  encoder-buffer-size : Encoder Buffer Size(KBytes)
+                        flags: readable, writable
+                        Integer. Range: 1024 - 4096 Default: 2048 
+  framerate           : framerate(fps)
+                        flags: readable, writable
+                        Integer. Range: 0 - 30 Default: 30 
+  gop                 : IDR frame refresh interval
+                        flags: readable, writable
+                        Integer. Range: -1 - 1000 Default: 30 
+  max-buffers         : max number of input buffer
+                        flags: readable, writable
+                        Integer. Range: 3 - 10 Default: 6 
+  min-buffers         : min number of input buffer
+                        flags: readable, writable
+                        Integer. Range: 0 - 2 Default: 2 
+  min-force-key-unit-interval: Minimum interval between force-keyunit requests in nanoseconds
+                        flags: readable, writable
+                        Unsigned Integer64. Range: 0 - 18446744073709551615 Default: 0 
+  name                : The name of the object
+                        flags: readable, writable, 0x2000
+                        String. Default: "amlvenc0"
+  parent              : The parent of the object
+                        flags: readable, writable, 0x2000
+                        Object of type "GstObject"
+  qos                 : Handle Quality-of-Service events from downstream
+                        flags: readable, writable
+                        Boolean. Default: false

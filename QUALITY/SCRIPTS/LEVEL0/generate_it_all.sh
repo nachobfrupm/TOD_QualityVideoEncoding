@@ -93,14 +93,14 @@ function parse_yolov_output ()
 
 # DIRECTORY WHERE ALL SCRIPTS, BINARIES AND REPOSITORIES ARE
 ROOT_DIR=/media/xruser/REMOTEDRIVING/TOD/TESIS/QUALITY2.0
-STAGE_2=false
-STAGE_3=false
-STAGE_4=false
-STAGE_5=false
-STAGE_6=false
-STAGE_7=false
+STAGE_2=true
+STAGE_3=true
+STAGE_4=true
+STAGE_5=true
+STAGE_6=true
+STAGE_7=true
 STAGE_8=true
-
+EXECUTE_SITI=true
 
 confs=("0.7")
 img_sizes=("640")
@@ -127,10 +127,11 @@ then
 elif [["$INPUT_FORMAT" == "jpg"]]
 then
     ${ROOT_DIR}/ENCODE/SCRIPTS/generate_mp4_from_jpgs.sh $INPUT_DIR ${INPUT_DIR}/source_mp4_file.mp4
-    INPUT_VIDEO_FILE=$INPUT_DIR $INPUT_DIR/source_mp4_file.mp4
+    INPUT_VIDEO_FILE=$INPUT_DIR/source_mp4_file.mp4
     mediainfo $INPUT_VIDEO_FILE > ${INPUT_VIDEO_FILE}.mediainfo
 else
     INPUT_VIDEO_FILE=$(ls ${INPUT_DIR}*.mp4)
+    mv $INPUT_VIDEO_FILE ${INPUT_DIR}/source_mp4_file.mp4
     mediainfo $INPUT_VIDEO_FILE > ${INPUT_VIDEO_FILE}.mediainfo
 fi
 echo "=================================================================================================="
@@ -150,7 +151,7 @@ ls -altr ${INPUT_DIR}/*mp4
 # Initialize CSV Headers
 for input_mp4_file in $(ls ${INPUT_DIR}/*mp4)
 do    
-    echo "BITRATE,VMAF,PSNR,SI,TI,P1204_3_MOS,VCA,EVCA,FRAME,CARS,INFERENCE_TIME_MS" > ${input_mp4_file}.csv
+    echo "BITRATE,VMAF,PSNR,SI,TI,P1204_3_MOS,VCA_E,VCA_H,EVCA_SC,EVCA_TC,CARS,INFERENCE_TIME_MS" > ${input_mp4_file}.csv
     file_bitrate_kbps=$(ffprobe -i $input_mp4_file 2>&1 |grep bitrate|cut -d ":" -f 6|cut -d " " -f2)
     echo "${file_bitrate_kbps},">> ${input_mp4_file}.csv
 done
@@ -186,7 +187,7 @@ then
     # Gather width and height of the input video
     INPUT_WIDTH=$(ffprobe -v error -select_streams v:0 -show_entries stream=width -of default=noprint_wrappers=1:nokey=1 source_mp4_file.mp4)
     INPUT_HEIGHT=$(ffprobe -v error -select_streams v:0 -show_entries stream=height -of default=noprint_wrappers=1:nokey=1 source_mp4_file.mp4)
-    VMAF_VALUE=100.0;
+    VMAF_VALUE=""
     sed -i '$ s/$/'"${VMAF_VALUE},"'/' "source_mp4_file.mp4.csv"    
     for input_vmaf_mp4_file in $(ls *mp4|grep _AT)
         do    
@@ -213,13 +214,15 @@ fi
 if ($STAGE_3)
 then
     cd $INPUT_DIR
+    PSNR_VALUE=""
+    sed -i '$ s/$/'"${PSNR_VALUE},"'/' source_mp4_file.mp4.csv
     for input_psnr_mp4_file in $(ls *mp4|grep _AT)
         do    
             TMP_PSNR_FILE=${INPUT_DIR}/TMP/psnr_${input_psnr_mp4_file}.txt
             echo "${TMP_PSNR_FILE}"
             FIRST_MP4_FILE=source_mp4_file.mp4
             SECOND_MP4_FILE=${input_psnr_mp4_file}
-            PSNR_VALUE=$(ffmpeg -i ${FIRST_MP4_FILE}  -i ${SECOND_MP4_FILE}  -lavfi psnr=stats_file=${TMP_PSNR_FILE} -f null - 2>&1 |grep Parsed|cut -d ":" -f5|cut -d " " -f1)
+            PSNR_VALUE=$(ffmpeg -i ${FIRST_MP4_FILE}  -i ${SECOND_MP4_FILE}  -lavfi psnr=stats_file=${TMP_PSNR_FILE} -f null - 2>&1 |grep Parsed|cut -d ":" -f5|cut -d " " -f1|tail -1)
             echo "PSNR - VALUE IS : $PSNR_VALUE"
             sed -i '$ s/$/'"${PSNR_VALUE},"'/' ${input_psnr_mp4_file}.csv
     done
@@ -237,7 +240,10 @@ then
     for input_siti_mp4_file in $(ls *mp4)
         do
             TMP_JSON_FILE=${INPUT_DIR}/TMP/${input_siti_mp4_file}_${BIT_RATE}_siti_out.json
-            siti-tools $input_siti_mp4_file --color-range full > $TMP_JSON_FILE
+            if ($EXECUTE_SITI)
+                then
+                siti-tools $input_siti_mp4_file --color-range full > $TMP_JSON_FILE
+            fi
             SPATIAL_INFO=$(cat $TMP_JSON_FILE|jq '.si | add/length')
             TEMPORAL_INFO=$(cat $TMP_JSON_FILE|jq '.ti | add/length')
             echo "${input_siti_mp4_fille} ; $SPATIAL_INFO ; $TEMPORAL_INFO"
@@ -261,7 +267,7 @@ then
         do
             poetry run p1204_3 --result_folder ${INPUT_DIR}/TMP --tmp ${INPUT_DIR}/TMP $input_bitstream_mp4_file
             the_base_name=$(basename $input_bitstream_mp4_file .mp4)                        
-            per_squence_mos=$(grep per_sequence ${INPUT_DIR}/TMP/${the_base_name}.json|cut -d ":" -f2)
+            per_squence_mos=$(grep per_sequence ${INPUT_DIR}/TMP/${the_base_name}.json|cut -d ":" -f2|cut -d "," -f1)
             echo "======================"
             echo $per_squence_mos        
             echo "======================"                
@@ -284,7 +290,7 @@ then
     # Gather width and height of the input video
     INPUT_WIDTH=$(ffprobe -v error -select_streams v:0 -show_entries stream=width -of default=noprint_wrappers=1:nokey=1 source_mp4_file.mp4)
     INPUT_HEIGHT=$(ffprobe -v error -select_streams v:0 -show_entries stream=height -of default=noprint_wrappers=1:nokey=1 source_mp4_file.mp4)
-    $ROOT_DIR/ALGORITHMS/VCA/VCA/source/apps/vca/vca --input ${INPUT_YUV} --input-res ${INPUT_WIDTH}x${INPUT_HEIGHT} --input-fps 30 --complexity-csv TMP/source_mp4_file.mp4.vca.csv
+    ${ROOT_DIR}/ALGORITHMS/VCA/VCA/source/apps/vca/vca --input ${INPUT_YUV} --input-res ${INPUT_WIDTH}x${INPUT_HEIGHT} --input-fps 30 --complexity-csv TMP/source_mp4_file.mp4.vca.csv
     # at this point we need to calculate Spatial Complexity (E) and Temporal complexity in Average from the csv file
     python3 $ROOT_DIR/SCRIPTS/LEVEL0/average.py TMP/source_mp4_file.mp4.vca.csv TMP/source_mp4_file.mp4.vca.average.csv
     E_Value=$(tail -1  TMP/source_mp4_file.mp4.vca.average.csv|cut -d "," -f2)
@@ -300,7 +306,7 @@ then
         # We need YUV files as in STAGE 2
         INPUT_YUV=${input_vca_mp4_file}.mp4.yuv
         ffmpeg -y -i  $input_vca_mp4_file -c:v rawvideo -pixel_format yuv420p $INPUT_YUV    
-        $ROOT_DIR/ALGORITHMS/VCA/VCA/source/apps/vca/vca --input ${INPUT_YUV} --    input-res ${INPUT_WIDTH}x${INPUT_HEIGHT} --input-fps 30 --complexity-csv TMP/${input_vca_mp4_file}.vca.csv
+        ${ROOT_DIR}/ALGORITHMS/VCA/VCA/source/apps/vca/vca --input ${INPUT_YUV} --input-res ${INPUT_WIDTH}x${INPUT_HEIGHT} --input-fps 30 --complexity-csv TMP/${input_vca_mp4_file}.vca.csv
         python3 $ROOT_DIR/SCRIPTS/LEVEL0/average.py TMP/${input_vca_mp4_file}.vca.csv TMP/${input_vca_mp4_file}.vca.average.csv
         E_Value=$(tail -1  TMP/${input_vca_mp4_file}.vca.average.csv|cut -d "," -f2)
         h_Value=$(tail -1  TMP/${input_vca_mp4_file}.vca.average.csv|cut -d "," -f3)
@@ -312,6 +318,8 @@ then
         /usr/bin/rm ${INPUT_YUV}
         done
 fi
+
+
 # ##########################################################################################################
 
 # ##########################################################################################################
@@ -395,16 +403,39 @@ do
             echo ""
             cd ${ROOT_DIR}/YOLOV7/yolov7
             ENV_PATH=/${ROOT_DIR}/YOLOV7/yolov7/yolov7/bin/activate        
+            
             bash --rcfile $ENV_PATH -i  -c "python3 detect.py --weights yolov7.pt --conf $conf --img-size $img_size --source $input_mp4_file > ${input_mp4_file}_${conf}_${img_size}.txt; exit 0"                             
             # Appends the result of this single yolov execution for a given bitrate(mp4 dependent),conf and img_size value into ${input_mp4_file}.csv
             cd ${INPUT_DIR}
+            echo "BITRATE,FRAME,CARS,BICYCLES,MOTORCYCLES,BUSES,TRUCKS,TRAFFIC_LIGHTS,PERSONS,STOP_SIGNS,INFERENCE_TIME_MS" > ${input_mp4_file}_${conf}_${img_size}_yolov7.csv            
             parse_yolov_output ${input_mp4_file}_${conf}_${img_size}.txt ${input_mp4_file}_${conf}_${img_size}_yolov7.csv            
-            echo "BITRATE,FRAME,CARS,BICYCLES,MOTORCYCLES,BUSES,TRUCKS,TRAFFIC_LIGHTS,PERSONS,STOP_SIGNS,INFERENCE_TIME_MS" > ${input_mp4_file}_${conf}_${img_size}_yolov7_average.csv            
+            
             # And calculate average for this single combination
+            echo "Executing line: python3 $ROOT_DIR/SCRIPTS/LEVEL0/average.py  ${input_mp4_file}_${conf}_${img_size}_yolov7.csv ${input_mp4_file}_${conf}_${img_size}_yolov7_average.csv "
             python3 $ROOT_DIR/SCRIPTS/LEVEL0/average.py  ${input_mp4_file}_${conf}_${img_size}_yolov7.csv ${input_mp4_file}_${conf}_${img_size}_yolov7_average.csv            
+            CAR_NUMBER=$(tail -1 ${input_mp4_file}_${conf}_${img_size}_yolov7_average.csv | cut  -d "," -f3)
+            INFERENCE_TIME_MS=$(tail -1 ${input_mp4_file}_${conf}_${img_size}_yolov7_average.csv | cut  -d "," -f11)
+            sed -i '$ s/$/'"${CAR_NUMBER},"'/' ${input_mp4_file}.csv
+            sed -i '$ s/$/'"${INFERENCE_TIME_MS}"'/' ${input_mp4_file}.csv
+
+            mv ${input_mp4_file}_${conf}_${img_size}.txt TMP
+            mv ${input_mp4_file}_${conf}_${img_size}_yolov7.csv TMP
+            mv ${input_mp4_file}_${conf}_${img_size}_yolov7_average.csv TMP
+
 done
 
 
 fi
 
+# ##########################################################################################################
+# STAGE 9 - PLOTTING GRAPHS
 
+# Combine CSVs
+cd ${INPUT_DIR}
+head -1 source_mp4_file.mp4.csv > file_for_plot.csv
+
+for input_mp4_file in $(ls ${INPUT_DIR}/*mp4)
+    do
+       tail -1 ${input_mp4_file}.csv >> file_for_plot.csv
+done
+python3 $ROOT_DIR/SCRIPTS/LEVEL0/plot_file_v2.py  ${INPUT_DIR}/file_for_plot.csv "YOLOV7 Degradation wtih Confidence ${conf} and Image Size ${img_size}"

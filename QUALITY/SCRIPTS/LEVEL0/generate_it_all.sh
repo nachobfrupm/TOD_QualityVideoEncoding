@@ -130,8 +130,9 @@ then
     INPUT_VIDEO_FILE=$INPUT_DIR/source_mp4_file.mp4
     mediainfo $INPUT_VIDEO_FILE > ${INPUT_VIDEO_FILE}.mediainfo
 else
-    INPUT_VIDEO_FILE=$(ls ${INPUT_DIR}*.mp4)
+    INPUT_VIDEO_FILE=$(ls ${INPUT_DIR}/*.mp4)
     mv $INPUT_VIDEO_FILE ${INPUT_DIR}/source_mp4_file.mp4
+    INPUT_VIDEO_FILE=$INPUT_DIR/source_mp4_file.mp4
     mediainfo $INPUT_VIDEO_FILE > ${INPUT_VIDEO_FILE}.mediainfo
 fi
 echo "=================================================================================================="
@@ -139,6 +140,7 @@ echo $INPUT_VIDEO_FILE
 ls -altr $INPUT_VIDEO_FILE
 echo "=================================================================================================="
 # ##########################################################################################################
+
 
 
 # ##########################################################################################################
@@ -205,6 +207,7 @@ then
 else
 echo "Stage 2 : OFF"
 fi
+
 
 
 # ##########################################################################################################
@@ -367,8 +370,9 @@ then
         echo "after 2"
         ENV_PATH=/${ROOT_DIR}/ALGORITHMS/EVCA/EVCA/evca_env/bin/activate
         echo "after 3"
-        INPUT_YUV_FULL_PATH=${INPUT_DIR}/${INPUT_YUV}/*
+        INPUT_YUV_FULL_PATH=${INPUT_DIR}/${INPUT_YUV}
         echo "after 4"
+        echo "Excuting python3 main.py -i $INPUT_YUV_FULL_PATH -r "${INPUT_WIDTH}x${INPUT_HEIGHT}"  -f 30  -c out.csv"
         bash --rcfile $ENV_PATH -i  -c "python3 main.py -i $INPUT_YUV_FULL_PATH -r "${INPUT_WIDTH}x${INPUT_HEIGHT}"  -f 30  -c out.csv ; exit 0"     
         echo "after 5"
         cp out_EVCA.csv ${INPUT_DIR}/TMP/${input_evca_mp4_file}.evca.csv
@@ -438,4 +442,15 @@ for input_mp4_file in $(ls ${INPUT_DIR}/*mp4)
     do
        tail -1 ${input_mp4_file}.csv >> file_for_plot.csv
 done
-python3 $ROOT_DIR/SCRIPTS/LEVEL0/plot_file_v2.py  ${INPUT_DIR}/file_for_plot.csv "YOLOV7 Degradation wtih Confidence ${conf} and Image Size ${img_size}"
+
+# GENERATE SEVERAL PLOTS
+ALL_FIELDS="BITRATE,VMAF,PSNR,SI,TI,P1204_3_MOS,VCA_E,VCA_H,EVCA_SC,EVCA_TC,CARS,INFERENCE_TIME_MS"
+SELECTED_FIELDS="VMAF PSNR SI TI P1204_3_MOS VCA_E VCA_H EVCA_SC EVCA_TC CARS INFERENCE_TIME_MS"
+for field in $SELECTED_FIELDS
+do
+    python3 $ROOT_DIR/SCRIPTS/LEVEL0/plot_file_param.py ${INPUT_DIR}/file_for_plot.csv "${field} vs Encoded Bitrate" ${field}
+done
+
+#python3 ../../SCRIPTS/LEVEL0/plot_file_param.py file_for_plot.csv "TITLE" "CARS"
+#python3 $ROOT_DIR/SCRIPTS/LEVEL0/plot_file_v2.py  ${INPUT_DIR}/file_for_plot.csv "YOLOV7 Degradation wtih Confidence ${conf} and Image Size ${img_size}"
+# ##########################################################################################################

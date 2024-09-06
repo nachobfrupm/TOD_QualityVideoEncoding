@@ -93,13 +93,15 @@ function parse_yolov_output ()
 
 # DIRECTORY WHERE ALL SCRIPTS, BINARIES AND REPOSITORIES ARE
 ROOT_DIR=/media/xruser/REMOTEDRIVING/TOD/TESIS/QUALITY2.0
-STAGE_2=true
-STAGE_3=true
-STAGE_4=true
-STAGE_5=true
-STAGE_6=true
+STAGE_0=true
+STAGE_1=true
+STAGE_2=false
+STAGE_3=false
+STAGE_4=false
+STAGE_5=false
+STAGE_6=false
 STAGE_7=true
-STAGE_8=true
+STAGE_8=false
 EXECUTE_SITI=true
 
 confs=("0.7")
@@ -118,13 +120,15 @@ INPUT_FORMAT=$2
 # ##########################################################################################################
 # STAGE 0
 
+if ($STAGE_0)
+then
 if [ "$INPUT_FORMAT" = "png" ]
 then
     # Step 0 Generate video file
     ${ROOT_DIR}/ENCODE/SCRIPTS/generate_mp4_from_pngs.sh $INPUT_DIR ${INPUT_DIR}/source_mp4_file.mp4
     INPUT_VIDEO_FILE=$INPUT_DIR/source_mp4_file.mp4
     mediainfo $INPUT_VIDEO_FILE > ${INPUT_VIDEO_FILE}.mediainfo
-elif [["$INPUT_FORMAT" == "jpg"]]
+elif [ "$INPUT_FORMAT" = "jpg" ]
 then
     ${ROOT_DIR}/ENCODE/SCRIPTS/generate_mp4_from_jpgs.sh $INPUT_DIR ${INPUT_DIR}/source_mp4_file.mp4
     INPUT_VIDEO_FILE=$INPUT_DIR/source_mp4_file.mp4
@@ -139,13 +143,15 @@ echo "==========================================================================
 echo $INPUT_VIDEO_FILE
 ls -altr $INPUT_VIDEO_FILE
 echo "=================================================================================================="
+fi
 # ##########################################################################################################
 
 
 
 # ##########################################################################################################
 # STAGE 1 BITRATE TRANSCODING
-
+if ($STAGE_1)
+then            
 echo ""
 ${ROOT_DIR}/ENCODE/SCRIPTS/transcode_bitrates.sh $INPUT_VIDEO_FILE
 echo "=================================================================================================="
@@ -159,6 +165,7 @@ do
 done
 echo "=================================================================================================="
 # ##########################################################################################################
+fi
 
 
 
@@ -207,7 +214,6 @@ then
 else
 echo "Stage 2 : OFF"
 fi
-
 
 
 # ##########################################################################################################
@@ -293,7 +299,8 @@ then
     # Gather width and height of the input video
     INPUT_WIDTH=$(ffprobe -v error -select_streams v:0 -show_entries stream=width -of default=noprint_wrappers=1:nokey=1 source_mp4_file.mp4)
     INPUT_HEIGHT=$(ffprobe -v error -select_streams v:0 -show_entries stream=height -of default=noprint_wrappers=1:nokey=1 source_mp4_file.mp4)
-    ${ROOT_DIR}/ALGORITHMS/VCA/VCA/source/apps/vca/vca --input ${INPUT_YUV} --input-res ${INPUT_WIDTH}x${INPUT_HEIGHT} --input-fps 30 --complexity-csv TMP/source_mp4_file.mp4.vca.csv
+    FPS_ORIGINAL_VIDEO=$(ffprobe -v error -select_streams v:0 -show_entries stream=r_frame_rate -of default=noprint_wrappers=1:nokey=1 source_mp4_file.mp4|cut -d "/" -f1)
+    ${ROOT_DIR}/ALGORITHMS/VCA/VCA/source/apps/vca/vca --input ${INPUT_YUV} --input-res ${INPUT_WIDTH}x${INPUT_HEIGHT} --input-fps $FPS_ORIGINAL_VIDEO --complexity-csv TMP/source_mp4_file.mp4.vca.csv
     # at this point we need to calculate Spatial Complexity (E) and Temporal complexity in Average from the csv file
     python3 $ROOT_DIR/SCRIPTS/LEVEL0/average.py TMP/source_mp4_file.mp4.vca.csv TMP/source_mp4_file.mp4.vca.average.csv
     E_Value=$(tail -1  TMP/source_mp4_file.mp4.vca.average.csv|cut -d "," -f2)
@@ -309,7 +316,7 @@ then
         # We need YUV files as in STAGE 2
         INPUT_YUV=${input_vca_mp4_file}.mp4.yuv
         ffmpeg -y -i  $input_vca_mp4_file -c:v rawvideo -pixel_format yuv420p $INPUT_YUV    
-        ${ROOT_DIR}/ALGORITHMS/VCA/VCA/source/apps/vca/vca --input ${INPUT_YUV} --input-res ${INPUT_WIDTH}x${INPUT_HEIGHT} --input-fps 30 --complexity-csv TMP/${input_vca_mp4_file}.vca.csv
+        ${ROOT_DIR}/ALGORITHMS/VCA/VCA/source/apps/vca/vca --input ${INPUT_YUV} --input-res ${INPUT_WIDTH}x${INPUT_HEIGHT} --input-fps $FPS_ORIGINAL_VIDEO --complexity-csv TMP/${input_vca_mp4_file}.vca.csv
         python3 $ROOT_DIR/SCRIPTS/LEVEL0/average.py TMP/${input_vca_mp4_file}.vca.csv TMP/${input_vca_mp4_file}.vca.average.csv
         E_Value=$(tail -1  TMP/${input_vca_mp4_file}.vca.average.csv|cut -d "," -f2)
         h_Value=$(tail -1  TMP/${input_vca_mp4_file}.vca.average.csv|cut -d "," -f3)
@@ -340,11 +347,11 @@ then
     # Gather width and height of the input video
     export INPUT_WIDTH=$(ffprobe -v error -select_streams v:0 -show_entries stream=width -of default=noprint_wrappers=1:nokey=1 source_mp4_file.mp4)
     export INPUT_HEIGHT=$(ffprobe -v error -select_streams v:0 -show_entries stream=height -of default=noprint_wrappers=1:nokey=1 source_mp4_file.mp4)
-
+    FPS_ORIGINAL_VIDEO=$(ffprobe -v error -select_streams v:0 -show_entries stream=r_frame_rate -of default=noprint_wrappers=1:nokey=1 source_mp4_file.mp4|cut -d "/" -f1)
     cd ${ROOT_DIR}/ALGORITHMS/EVCA/EVCA
     ENV_PATH=/home/xruser/TOD/TESIS/QUALITY2.0/ALGORITHMS/EVCA/EVCA/evca_env/bin/activate
     INPUT_YUV_FULL_PATH=${INPUT_DIR}/${INPUT_YUV}
-    bash --rcfile $ENV_PATH -i  -c "python3 main.py -i $INPUT_YUV_FULL_PATH -r "${INPUT_WIDTH}x${INPUT_HEIGHT}"  -f 30  -c out.csv ; exit 0"   
+    bash --rcfile $ENV_PATH -i  -c "python3 main.py -i $INPUT_YUV_FULL_PATH -r "${INPUT_WIDTH}x${INPUT_HEIGHT}"  -f $FPS_ORIGINAL_VIDEO  -c out.csv ; exit 0"   
    
     ps -auxwww|grep bash    
     cp out_EVCA.csv ${INPUT_DIR}/TMP/source_mp4_file.mp4.evca.csv
@@ -372,8 +379,8 @@ then
         echo "after 3"
         INPUT_YUV_FULL_PATH=${INPUT_DIR}/${INPUT_YUV}
         echo "after 4"
-        echo "Excuting python3 main.py -i $INPUT_YUV_FULL_PATH -r "${INPUT_WIDTH}x${INPUT_HEIGHT}"  -f 30  -c out.csv"
-        bash --rcfile $ENV_PATH -i  -c "python3 main.py -i $INPUT_YUV_FULL_PATH -r "${INPUT_WIDTH}x${INPUT_HEIGHT}"  -f 30  -c out.csv ; exit 0"     
+        echo "Excuting python3 main.py -i $INPUT_YUV_FULL_PATH -r "${INPUT_WIDTH}x${INPUT_HEIGHT}"  -f $FPS_ORIGINAL_VIDEO  -c out.csv"
+        bash --rcfile $ENV_PATH -i  -c "python3 main.py -i $INPUT_YUV_FULL_PATH -r "${INPUT_WIDTH}x${INPUT_HEIGHT}"  -f $FPS_ORIGINAL_VIDEO  -c out.csv ; exit 0"     
         echo "after 5"
         cp out_EVCA.csv ${INPUT_DIR}/TMP/${input_evca_mp4_file}.evca.csv
         echo "after 6"        
@@ -454,3 +461,6 @@ done
 #python3 ../../SCRIPTS/LEVEL0/plot_file_param.py file_for_plot.csv "TITLE" "CARS"
 #python3 $ROOT_DIR/SCRIPTS/LEVEL0/plot_file_v2.py  ${INPUT_DIR}/file_for_plot.csv "YOLOV7 Degradation wtih Confidence ${conf} and Image Size ${img_size}"
 # ##########################################################################################################
+
+# STAGE 10 CLEANUP
+/usr/bin/rm $INPUT_DIR/*.yuv

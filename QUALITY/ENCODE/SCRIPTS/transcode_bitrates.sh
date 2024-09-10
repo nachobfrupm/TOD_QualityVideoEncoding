@@ -1,9 +1,10 @@
 #Trasncode to different bitrates
 #! /usr/bin/bash
 export INPUT_FILE=$1
+export INPUT_DIR=$2
 
-#BIT_RATES="6000 5000 4000 3000 2000 1500 1000 800 600 500"
-BIT_RATES="3500 1000"
+BIT_RATES="6000 5000 4000 3000 2000 1500 1000 800 600 500"
+#BIT_RATES="3500 1000"
 #BIT_RATES="1000"
 
 PRESET=0   # LOW LATENCY HQ
@@ -15,7 +16,10 @@ ffmpeg -y -i  $INPUT_FILE -c:v rawvideo -pixel_format yuv420p ${INPUT_FILE}.yuv
 INPUT_WIDTH=$(ffprobe -v error -select_streams v:0 -show_entries stream=width -of default=noprint_wrappers=1:nokey=1 $INPUT_FILE)
 INPUT_HEIGHT=$(ffprobe -v error -select_streams v:0 -show_entries stream=height -of default=noprint_wrappers=1:nokey=1 $INPUT_FILE)
 FPS_ORIGINAL_VIDEO=$(ffprobe -v error -select_streams v:0 -show_entries stream=r_frame_rate -of default=noprint_wrappers=1:nokey=1 ${INPUT_FILE}|cut -d "/" -f1 )
-    
+## First encode "master" at 8Mbps
+BIT_RATE=8000
+ffmpeg -s ${INPUT_WIDTH}x${INPUT_HEIGHT} -framerate $FPS_ORIGINAL_VIDEO -y -i ${INPUT_FILE}.yuv -c:v libx264 -x264-params "nal-hrd=cbr" -b:v ${BIT_RATE}k -bufsize 10000k ${INPUT_DIR}/source_mp4_file.mp4
+
 
 for BIT_RATE in $BIT_RATES
     do
@@ -31,3 +35,7 @@ for BIT_RATE in $BIT_RATES
     ffmpeg -s ${INPUT_WIDTH}x${INPUT_HEIGHT} -framerate $FPS_ORIGINAL_VIDEO -y -i ${INPUT_FILE}.yuv -c:v libx264 -x264-params "nal-hrd=cbr" -b:v ${BIT_RATE}k -bufsize 10000k ${INPUT_FILE}_AT_${BIT_RATE}.mp4
 
 done
+echo "/usr/bin/rm $INPUT_FILE"
+/usr/bin/rm $INPUT_FILE
+
+

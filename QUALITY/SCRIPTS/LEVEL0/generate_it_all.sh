@@ -1,6 +1,45 @@
 #!/bin/bash
 
 
+## Some warning...
+## Not all resolutions are suitable for some tools, specially SI/TI and EVCA
+
+# For Apollo resize was done to 3840x3076
+## ffmpeg -y -framerate 30 -pattern_type glob -i '*.jpg' -b:v 8000k -vf "scale=3840:3076" -minrate 8000k -maxrate 8000k -c:v libx264 -pix_fmt yuv420p new_scale.mp4
+
+
+
+
+## For Argodrive a rescaling was required to resize to 2048x1536 using command
+## ffmpeg -y -framerate 30 -pattern_type glob -i '*.jpg' -b:v 8000k -vf "scale=2048:1536" -minrate 8000k -maxrate 8000k -c:v libx264 -pix_fmt yuv420p newscale.mp4
+
+
+## For Apollo
+## ffmpeg -y -framerate 25 -pattern_type glob -i '*.jpg' -b:v 8000k -vf "scale=1920:1080" -minrate 8000k -maxrate 8000k -c:v libx264 -pix_fmt yuv420p full_hd.mp4
+
+
+## For COMMA2K (original) 1164x874 ==> 
+## Input is HEVC
+## Decode to YUV
+## ffmpeg -y -i  video.hevc -c:v rawvideo -pixel_format yuv420p video.yuv
+## Resize to 1280x960 (YUV)
+## ffmpeg -s:v 1164x874 -r 25 -i video.yuv -vf scale=1280:960 -c:v rawvideo -pix_fmt yuv420p video_resized.yuv
+## Now produce input for this screen at 8Mbps H264
+## ffmpeg -s 1280x960 -framerate 25 -y -i video_resized.yuv -c:v libx264 -x264-params "nal-hrd=cbr" -b:v 8000k -bufsize 10000k source_full_duration.mp4
+## Finally - Extract 10 seconds and we are ready ( between 30-40s )
+##ffmpeg -ss 30 -to 40 -i source_full_duration.mp4 -c copy -avoid_negative_ts make_zero output.mp4
+
+
+
+
+## For kitti 1400x1400 we will resize to 1536x1536
+## ffmpeg -y -framerate 30 -pattern_type glob -i '*.png' -b:v 8000k -vf "scale=1536:1536" -minrate 8000k -maxrate 8000k -c:v libx264 -pix_fmt yuv420p new_scale.mp4
+
+## For nuscenes
+## ffmpeg -y -framerate 30 -pattern_type glob -i '*.jpg' -b:v 8000k -vf "scale=1536:900" -minrate 8000k -maxrate 8000k -c:v libx264 -pix_fmt yuv420p new_scale.mp4
+
+
+
 function text_before_Done ()
 {
     
@@ -93,16 +132,36 @@ function parse_yolov_output ()
 
 # DIRECTORY WHERE ALL SCRIPTS, BINARIES AND REPOSITORIES ARE
 ROOT_DIR=/media/xruser/REMOTEDRIVING/TOD/TESIS/QUALITY2.0
-STAGE_0=true
-STAGE_1=true
+#STAGE_0=true
+STAGE_0=false
+#STAGE_1=true
+STAGE_1=false
+#STAGE_2=true
 STAGE_2=false
+#STAGE_3=true
 STAGE_3=false
+#STAGE_4=true
 STAGE_4=false
+#STAGE_5=true
 STAGE_5=false
+#STAGE_6=true
 STAGE_6=false
-STAGE_7=true
+#STAGE_7=true
+STAGE_7=false
+
+# YOLOV7
+#STAGE_8=true
 STAGE_8=false
+
+# COVER METRIC
+STAGE_9=true
+#STAGE_9=false
 EXECUTE_SITI=true
+
+# PLOTTING
+STAGE_10=true
+#STAGE_10=false
+
 
 confs=("0.7")
 img_sizes=("640")
@@ -125,18 +184,18 @@ then
 if [ "$INPUT_FORMAT" = "png" ]
 then
     # Step 0 Generate video file
-    ${ROOT_DIR}/ENCODE/SCRIPTS/generate_mp4_from_pngs.sh $INPUT_DIR ${INPUT_DIR}/source_mp4_file.mp4
-    INPUT_VIDEO_FILE=$INPUT_DIR/source_mp4_file.mp4
+    ${ROOT_DIR}/ENCODE/SCRIPTS/generate_mp4_from_pngs.sh $INPUT_DIR ${INPUT_DIR}/input_mp4_file.mp4
+    INPUT_VIDEO_FILE=$INPUT_DIR/input_mp4_file.mp4
     mediainfo $INPUT_VIDEO_FILE > ${INPUT_VIDEO_FILE}.mediainfo
 elif [ "$INPUT_FORMAT" = "jpg" ]
 then
-    ${ROOT_DIR}/ENCODE/SCRIPTS/generate_mp4_from_jpgs.sh $INPUT_DIR ${INPUT_DIR}/source_mp4_file.mp4
-    INPUT_VIDEO_FILE=$INPUT_DIR/source_mp4_file.mp4
+    ${ROOT_DIR}/ENCODE/SCRIPTS/generate_mp4_from_jpgs.sh $INPUT_DIR ${INPUT_DIR}/input_mp4_file.mp4
+    INPUT_VIDEO_FILE=$INPUT_DIR/input_mp4_file.mp4
     mediainfo $INPUT_VIDEO_FILE > ${INPUT_VIDEO_FILE}.mediainfo
 else
     INPUT_VIDEO_FILE=$(ls ${INPUT_DIR}/*.mp4)
-    mv $INPUT_VIDEO_FILE ${INPUT_DIR}/source_mp4_file.mp4
-    INPUT_VIDEO_FILE=$INPUT_DIR/source_mp4_file.mp4
+    #mv $INPUT_VIDEO_FILE ${INPUT_DIR}/source_mp4_file.mp4
+    #INPUT_VIDEO_FILE=$INPUT_DIR/source_mp4_file.mp4
     mediainfo $INPUT_VIDEO_FILE > ${INPUT_VIDEO_FILE}.mediainfo
 fi
 echo "=================================================================================================="
@@ -153,13 +212,14 @@ fi
 if ($STAGE_1)
 then            
 echo ""
-${ROOT_DIR}/ENCODE/SCRIPTS/transcode_bitrates.sh $INPUT_VIDEO_FILE
+${ROOT_DIR}/ENCODE/SCRIPTS/transcode_bitrates.sh $INPUT_VIDEO_FILE $INPUT_DIR
 echo "=================================================================================================="
 ls -altr ${INPUT_DIR}/*mp4
 # Initialize CSV Headers
 for input_mp4_file in $(ls ${INPUT_DIR}/*mp4)
 do    
-    echo "BITRATE,VMAF,PSNR,SI,TI,P1204_3_MOS,VCA_E,VCA_H,EVCA_SC,EVCA_TC,CARS,INFERENCE_TIME_MS" > ${input_mp4_file}.csv
+    #echo "BITRATE,VMAF,PSNR,SI,TI,P1204_3_MOS,VCA_E,VCA_H,EVCA_SC,EVCA_TC,CARS,INFERENCE_TIME_MS" > ${input_mp4_file}.csv
+    echo "BITRATE,VMAF,PSNR,SI,TI,P1204_3_MOS,VCA_E,VCA_H,EVCA_SC,EVCA_TC,CARS,INFERENCE_TIME_MS,COVER_SSC,COVER_TSC,COVER_ASC,COVER_FSC" > ${input_mp4_file}.csv
     file_bitrate_kbps=$(ffprobe -i $input_mp4_file 2>&1 |grep bitrate|cut -d ":" -f 6|cut -d " " -f2)
     echo "${file_bitrate_kbps},">> ${input_mp4_file}.csv
 done
@@ -244,8 +304,6 @@ fi
 if ($STAGE_4)
 then
     cd $INPUT_DIR
-
-
     for input_siti_mp4_file in $(ls *mp4)
         do
             TMP_JSON_FILE=${INPUT_DIR}/TMP/${input_siti_mp4_file}_${BIT_RATE}_siti_out.json
@@ -261,6 +319,7 @@ then
 
         done                        
 fi
+
 # ##########################################################################################################
 
 
@@ -348,10 +407,18 @@ then
     export INPUT_WIDTH=$(ffprobe -v error -select_streams v:0 -show_entries stream=width -of default=noprint_wrappers=1:nokey=1 source_mp4_file.mp4)
     export INPUT_HEIGHT=$(ffprobe -v error -select_streams v:0 -show_entries stream=height -of default=noprint_wrappers=1:nokey=1 source_mp4_file.mp4)
     FPS_ORIGINAL_VIDEO=$(ffprobe -v error -select_streams v:0 -show_entries stream=r_frame_rate -of default=noprint_wrappers=1:nokey=1 source_mp4_file.mp4|cut -d "/" -f1)
+
+    if [[ "$FPS_ORIGINAL_VIDEO" == "25" ]] 
+    then
+    G_PARAMETER=25
+    else # ASsume 30
+    G_PARAMETER=15
+    fi
+
     cd ${ROOT_DIR}/ALGORITHMS/EVCA/EVCA
     ENV_PATH=/home/xruser/TOD/TESIS/QUALITY2.0/ALGORITHMS/EVCA/EVCA/evca_env/bin/activate
     INPUT_YUV_FULL_PATH=${INPUT_DIR}/${INPUT_YUV}
-    bash --rcfile $ENV_PATH -i  -c "python3 main.py -i $INPUT_YUV_FULL_PATH -r "${INPUT_WIDTH}x${INPUT_HEIGHT}"  -f $FPS_ORIGINAL_VIDEO  -c out.csv ; exit 0"   
+    bash --rcfile $ENV_PATH -i  -c "python3 main.py -i $INPUT_YUV_FULL_PATH -r "${INPUT_WIDTH}x${INPUT_HEIGHT}" -g ${G_PARAMETER}  -f $FPS_ORIGINAL_VIDEO  -c out.csv ; exit 0"   
    
     ps -auxwww|grep bash    
     cp out_EVCA.csv ${INPUT_DIR}/TMP/source_mp4_file.mp4.evca.csv
@@ -379,8 +446,8 @@ then
         echo "after 3"
         INPUT_YUV_FULL_PATH=${INPUT_DIR}/${INPUT_YUV}
         echo "after 4"
-        echo "Excuting python3 main.py -i $INPUT_YUV_FULL_PATH -r "${INPUT_WIDTH}x${INPUT_HEIGHT}"  -f $FPS_ORIGINAL_VIDEO  -c out.csv"
-        bash --rcfile $ENV_PATH -i  -c "python3 main.py -i $INPUT_YUV_FULL_PATH -r "${INPUT_WIDTH}x${INPUT_HEIGHT}"  -f $FPS_ORIGINAL_VIDEO  -c out.csv ; exit 0"     
+        echo "Excuting python3 main.py -i $INPUT_YUV_FULL_PATH -r "${INPUT_WIDTH}x${INPUT_HEIGHT}"  -g ${G_PARAMETER} -f $FPS_ORIGINAL_VIDEO  -c out.csv"
+        bash --rcfile $ENV_PATH -i  -c "python3 main.py -i $INPUT_YUV_FULL_PATH -r "${INPUT_WIDTH}x${INPUT_HEIGHT}"  -g ${G_PARAMETER} -f $FPS_ORIGINAL_VIDEO  -c out.csv ; exit 0"     
         echo "after 5"
         cp out_EVCA.csv ${INPUT_DIR}/TMP/${input_evca_mp4_file}.evca.csv
         echo "after 6"        
@@ -396,11 +463,15 @@ then
     done
 fi
 
-# ##########################################################################################################
+
+
+                
 
 
 # ##########################################################################################################
-# STAGE 8 YOLOV7 DETECTION
+
+# ##########################################################################################################
+# STAGE 9 YOLOV7 DETECTION
 if ($STAGE_8)
 then
 conf="0.7"
@@ -428,7 +499,7 @@ do
             INFERENCE_TIME_MS=$(tail -1 ${input_mp4_file}_${conf}_${img_size}_yolov7_average.csv | cut  -d "," -f11)
             sed -i '$ s/$/'"${CAR_NUMBER},"'/' ${input_mp4_file}.csv
             sed -i '$ s/$/'"${INFERENCE_TIME_MS}"'/' ${input_mp4_file}.csv
-
+            echo "YOLOV7: $CAR_NUMBER , $INFERENCE_TIME"
             mv ${input_mp4_file}_${conf}_${img_size}.txt TMP
             mv ${input_mp4_file}_${conf}_${img_size}_yolov7.csv TMP
             mv ${input_mp4_file}_${conf}_${img_size}_yolov7_average.csv TMP
@@ -438,23 +509,54 @@ done
 
 fi
 
+
 # ##########################################################################################################
-# STAGE 9 - PLOTTING GRAPHS
+# STAGE 9 COVER
+if ($STAGE_9)
+then
+    cd ${ROOT_DIR}/ALGORITHMS/COVER/COVER
+    ENV_PATH=${ROOT_DIR}/ALGORITHMS/COVER/cover/bin/activate        
+    bash --rcfile $ENV_PATH -i  -c "python evaluate_a_set_of_videos.py -i  ${INPUT_DIR} --output  ${INPUT_DIR}/cover.csv ; exit 0"                                                             
+    # This is not working
+    # python3 ${ROOT_DIR}/SCRIPTS/LEVEL0/merge_csvs.py ${INPUT_DIR}/file_for_plot.csv ${INPUT_DIR}/cover.csv ${INPUT_DIR}/full_plot_with_cover.csv
+fi
+cd $INPUT_DIR
+for input_mp4_file in $(ls *.mp4)
+    do
+      dos2unix ${input_mp4_file}.csv
+      data_cover=$(grep ${input_mp4_file} cover.csv|head -1 |cut -d "," -f2-5)
+      echo "${input_mp4_file}.csv $data_cover"
+      sed -i '$ s/$/'",${data_cover}"'/' ${input_mp4_file}.csv
+    
+done
+## Iterate thru all the lines in file_for_plot.csv and append the correct information
+
+
+
+# ##########################################################################################################
+# STAGE 10 - PLOTTING GRAPHS
 
 # Combine CSVs
+if ($STAGE_10)
+then
 cd ${INPUT_DIR}
-head -1 source_mp4_file.mp4.csv > file_for_plot.csv
+#head -1 source_mp4_file.mp4.csv > file_for_plot.csv
+echo "BITRATE,VMAF,PSNR,SI,TI,P1204_3_MOS,VCA_E,VCA_H,EVCA_SC,EVCA_TC,CARS,INFERENCE_TIME_MS,COVER_SSC,COVER_TSC,COVER_ASC,COVER_FSC" > file_for_plot.csv
 
 for input_mp4_file in $(ls ${INPUT_DIR}/*mp4)
     do
+       echo $input_mp4_file 
        tail -1 ${input_mp4_file}.csv >> file_for_plot.csv
 done
 
 # GENERATE SEVERAL PLOTS
-ALL_FIELDS="BITRATE,VMAF,PSNR,SI,TI,P1204_3_MOS,VCA_E,VCA_H,EVCA_SC,EVCA_TC,CARS,INFERENCE_TIME_MS"
-SELECTED_FIELDS="VMAF PSNR SI TI P1204_3_MOS VCA_E VCA_H EVCA_SC EVCA_TC CARS INFERENCE_TIME_MS"
+#ALL_FIELDS="BITRATE,VMAF,PSNR,SI,TI,P1204_3_MOS,VCA_E,VCA_H,EVCA_SC,EVCA_TC,CARS,INFERENCE_TIME_MS"
+ALL_FIELDS="BITRATE,VMAF,PSNR,SI,TI,P1204_3_MOS,VCA_E,VCA_H,EVCA_SC,EVCA_TC,CARS,INFERENCE_TIME_MS,COVER_SSC,COVER_TSC,COVER_ASC,COVER_FSC"
+#SELECTED_FIELDS="VMAF PSNR SI TI P1204_3_MOS VCA_E VCA_H EVCA_SC EVCA_TC CARS INFERENCE_TIME_MS"
+SELECTED_FIELDS="BITRATE VMAF PSNR SI TI P1204_3_MOS VCA_E VCA_H EVCA_SC EVCA_TC CARS INFERENCE_TIME_MS COVER_SSC COVER_TSC COVER_ASC COVER_FSC"
 for field in $SELECTED_FIELDS
 do
+    echo 'python3 $ROOT_DIR/SCRIPTS/LEVEL0/plot_file_param.py ${INPUT_DIR}/file_for_plot.csv "${field} vs Encoded Bitrate" ${field}'
     python3 $ROOT_DIR/SCRIPTS/LEVEL0/plot_file_param.py ${INPUT_DIR}/file_for_plot.csv "${field} vs Encoded Bitrate" ${field}
 done
 
@@ -463,4 +565,5 @@ done
 # ##########################################################################################################
 
 # STAGE 10 CLEANUP
+fi
 /usr/bin/rm $INPUT_DIR/*.yuv

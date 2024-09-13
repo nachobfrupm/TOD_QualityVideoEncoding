@@ -564,6 +564,6 @@ done
 #python3 $ROOT_DIR/SCRIPTS/LEVEL0/plot_file_v2.py  ${INPUT_DIR}/file_for_plot.csv "YOLOV7 Degradation wtih Confidence ${conf} and Image Size ${img_size}"
 # ##########################################################################################################
 
-# STAGE 10 CLEANUP
+# STAGE 11 CLEANUP
 fi
 /usr/bin/rm $INPUT_DIR/*.yuv

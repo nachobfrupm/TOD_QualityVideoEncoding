@@ -54,6 +54,8 @@ function parse_yolov_output ()
 {
     output_yolov_file=$1
     output_csv_file=$2
+    file_bitrate_kbps=$3
+    
     grep mp4 ${output_yolov_file}|grep -v img_size|cut -d " " -f3,5-20 > /tmp/yolov7.out.txt
     while IFS= read -r line; do
     # Check if the current line contains the word "Done"  
@@ -132,26 +134,26 @@ function parse_yolov_output ()
 
 # DIRECTORY WHERE ALL SCRIPTS, BINARIES AND REPOSITORIES ARE
 ROOT_DIR=/media/xruser/REMOTEDRIVING/TOD/TESIS/QUALITY2.0
-#STAGE_0=true
-STAGE_0=false
-#STAGE_1=true
-STAGE_1=false
-#STAGE_2=true
-STAGE_2=false
-#STAGE_3=true
-STAGE_3=false
-#STAGE_4=true
-STAGE_4=false
-#STAGE_5=true
-STAGE_5=false
-#STAGE_6=true
-STAGE_6=false
-#STAGE_7=true
-STAGE_7=false
+STAGE_0=true
+#STAGE_0=false
+STAGE_1=true
+#STAGE_1=false
+STAGE_2=true
+#STAGE_2=false
+STAGE_3=true
+#STAGE_3=false
+STAGE_4=true
+#STAGE_4=false
+STAGE_5=true
+#STAGE_5=false
+STAGE_6=true
+#STAGE_6=false
+STAGE_7=true
+#STAGE_7=false
 
 # YOLOV7
-#STAGE_8=true
-STAGE_8=false
+STAGE_8=true
+#STAGE_8=false
 
 # COVER METRIC
 STAGE_9=true
@@ -465,13 +467,10 @@ fi
 
 
 
-                
-
-
 # ##########################################################################################################
 
 # ##########################################################################################################
-# STAGE 9 YOLOV7 DETECTION
+# STAGE 8 YOLOV7 DETECTION
 if ($STAGE_8)
 then
 conf="0.7"
@@ -483,14 +482,18 @@ do
             echo "Executing line : python3 detect.py --weights yolov7.pt --conf $conf --img-size $img_size --source $input_mp4_file > ${input_mp4_file}_${conf}_${img_size}.txt"
             echo "======================================================================================================================================"   
             echo ""
+
+
             cd ${ROOT_DIR}/YOLOV7/yolov7
             ENV_PATH=/${ROOT_DIR}/YOLOV7/yolov7/yolov7/bin/activate        
+            
+            file_bitrate_kbps=$(ffprobe -i $input_mp4_file 2>&1 |grep bitrate|cut -d ":" -f 6|cut -d " " -f2)
             
             bash --rcfile $ENV_PATH -i  -c "python3 detect.py --weights yolov7.pt --conf $conf --img-size $img_size --source $input_mp4_file > ${input_mp4_file}_${conf}_${img_size}.txt; exit 0"                             
             # Appends the result of this single yolov execution for a given bitrate(mp4 dependent),conf and img_size value into ${input_mp4_file}.csv
             cd ${INPUT_DIR}
             echo "BITRATE,FRAME,CARS,BICYCLES,MOTORCYCLES,BUSES,TRUCKS,TRAFFIC_LIGHTS,PERSONS,STOP_SIGNS,INFERENCE_TIME_MS" > ${input_mp4_file}_${conf}_${img_size}_yolov7.csv            
-            parse_yolov_output ${input_mp4_file}_${conf}_${img_size}.txt ${input_mp4_file}_${conf}_${img_size}_yolov7.csv            
+            parse_yolov_output ${input_mp4_file}_${conf}_${img_size}.txt ${input_mp4_file}_${conf}_${img_size}_yolov7.csv $file_bitrate_kbps      
             
             # And calculate average for this single combination
             echo "Executing line: python3 $ROOT_DIR/SCRIPTS/LEVEL0/average.py  ${input_mp4_file}_${conf}_${img_size}_yolov7.csv ${input_mp4_file}_${conf}_${img_size}_yolov7_average.csv "
@@ -503,10 +506,7 @@ do
             mv ${input_mp4_file}_${conf}_${img_size}.txt TMP
             mv ${input_mp4_file}_${conf}_${img_size}_yolov7.csv TMP
             mv ${input_mp4_file}_${conf}_${img_size}_yolov7_average.csv TMP
-
 done
-
-
 fi
 
 
@@ -549,11 +549,19 @@ for input_mp4_file in $(ls ${INPUT_DIR}/*mp4)
        tail -1 ${input_mp4_file}.csv >> file_for_plot.csv
 done
 
+# ADD CAR_PCT_COLUMN SI_PCT AND TI_PCT to CSV
+python3 $ROOT_DIR/SCRIPTS/LEVEL0/add_column.py file_for_plot.csv file_for_plot_1.csv CARS
+python3 $ROOT_DIR/SCRIPTS/LEVEL0/add_column.py file_for_plot_1.csv file_for_plot_2.csv CARS
+python3 $ROOT_DIR/SCRIPTS/LEVEL0/add_column.py file_for_plot_2.csv file_for_plot_3.csv CARS
+mv file_for_plot.csv file_for_plot_no_pcts.csv 
+mv file_for_plot_3.csv file_for_plot.csv
+
+
 # GENERATE SEVERAL PLOTS
 #ALL_FIELDS="BITRATE,VMAF,PSNR,SI,TI,P1204_3_MOS,VCA_E,VCA_H,EVCA_SC,EVCA_TC,CARS,INFERENCE_TIME_MS"
 ALL_FIELDS="BITRATE,VMAF,PSNR,SI,TI,P1204_3_MOS,VCA_E,VCA_H,EVCA_SC,EVCA_TC,CARS,INFERENCE_TIME_MS,COVER_SSC,COVER_TSC,COVER_ASC,COVER_FSC"
 #SELECTED_FIELDS="VMAF PSNR SI TI P1204_3_MOS VCA_E VCA_H EVCA_SC EVCA_TC CARS INFERENCE_TIME_MS"
-SELECTED_FIELDS="BITRATE VMAF PSNR SI TI P1204_3_MOS VCA_E VCA_H EVCA_SC EVCA_TC CARS INFERENCE_TIME_MS COVER_SSC COVER_TSC COVER_ASC COVER_FSC"
+SELECTED_FIELDS="BITRATE VMAF PSNR SI TI SI_PCT TI_PCT P1204_3_MOS VCA_E VCA_H EVCA_SC EVCA_TC CARS CARS_PCT INFERENCE_TIME_MS COVER_SSC COVER_TSC COVER_ASC COVER_FSC"
 for field in $SELECTED_FIELDS
 do
     echo 'python3 $ROOT_DIR/SCRIPTS/LEVEL0/plot_file_param.py ${INPUT_DIR}/file_for_plot.csv "${field} vs Encoded Bitrate" ${field}'

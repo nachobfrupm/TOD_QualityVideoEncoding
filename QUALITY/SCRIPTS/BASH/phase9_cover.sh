@@ -31,7 +31,14 @@ for input_mp4_file in $(ls *.mp4)
       dos2unix ${input_mp4_file}.csv
       data_cover=$(grep ${input_mp4_file} cover.csv|head -1 |cut -d "," -f2-5)
       echo "${input_mp4_file}.csv $data_cover"
-      $SCRIPT_DIR/change_csv_at_pos.sh ${input_mp4_file}.csv 11 $data_cover $TEMPORARY_FILE
+      COVER_SSC=$(echo $data_cover|cut -d "," -f1)      
+      COVER_TSC=$(echo $data_cover|cut -d "," -f2)      
+      COVER_ASC=$(echo $data_cover|cut -d "," -f3)      
+      COVER_FSC=$(echo $data_cover|cut -d "," -f4)      
+      $SCRIPT_DIR/change_csv_at_pos.sh ${input_mp4_file}.csv 11 $COVER_SSC $TEMPORARY_FILE
+      $SCRIPT_DIR/change_csv_at_pos.sh ${input_mp4_file}.csv 12 $COVER_TSC $TEMPORARY_FILE
+      $SCRIPT_DIR/change_csv_at_pos.sh ${input_mp4_file}.csv 13 $COVER_ASC $TEMPORARY_FILE
+      $SCRIPT_DIR/change_csv_at_pos.sh ${input_mp4_file}.csv 14 $COVER_FSC $TEMPORARY_FILE
       
     
 done

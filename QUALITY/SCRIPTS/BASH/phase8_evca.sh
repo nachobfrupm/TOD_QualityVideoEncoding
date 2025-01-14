@@ -77,8 +77,8 @@ for input_evca_mp4_file in $(ls *.mp4 | grep "_AT_"); do
     # Process average
     cd ${INPUT_DIR}
     python3 $ROOT_DIR/SCRIPTS/PYTHON/average.py ${INPUT_DIR}/TMP/${input_evca_mp4_file}.evca.csv ${INPUT_DIR}/TMP/${input_evca_mp4_file}.evca.average.csv
-    SPATIAL_INFO=$(tail -1 ${INPUT_DIR}/TMP/source_mp4_file.mp4.evca.average.csv | cut -d "," -f1)
-    TEMPORAL_INFO=$(tail -1 ${INPUT_DIR}/TMP/source_mp4_file.mp4.evca.average.csv | cut -d "," -f2)
+    SPATIAL_INFO=$(tail -1 ${INPUT_DIR}/TMP/${input_evca_mp4_file}.evca.average.csv | cut -d "," -f1)
+    TEMPORAL_INFO=$(tail -1 ${INPUT_DIR}/TMP/${input_evca_mp4_file}.evca.average.csv | cut -d "," -f2)
     echo "SPATIAL_INFO : $SPATIAL_INFO"
     echo "TEMPORAL_INFO: $TEMPORAL_INFO"
     $SCRIPT_DIR/change_csv_at_pos.sh ${input_evca_mp4_file}.csv 9 $SPATIAL_INFO $TEMPORARY_FILE

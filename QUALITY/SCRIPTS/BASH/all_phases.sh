@@ -9,6 +9,7 @@ cd $SCRIPT_DIR
 cd $SCRIPT_DIR 
 ./phase2_transcode_qualitites.sh $INPUT_DIR 
 cd $SCRIPT_DIR 
+
 ./phase3_vmaf.sh $INPUT_DIR 
 cd $SCRIPT_DIR 
 ./phase4_psnr.sh $INPUT_DIR &
@@ -33,6 +34,9 @@ done
 
 cd $SCRIPT_DIR
 ./phase11_add_pcts.sh $INPUT_DIR
+
+cd $SCRIPT_DIR
+./phase12_plot_files.sh $INPUT_DIR
 
 
 

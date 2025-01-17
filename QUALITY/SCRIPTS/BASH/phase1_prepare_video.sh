@@ -67,7 +67,7 @@ function preprocess_kitti() {
     ## For kitti 1400x1400 we will resize to 1536x1536
     ## ffmpeg -y -framerate 30 -pattern_type glob -i '*.png' -b:v 8000k -vf "scale=1536:1536" -minrate 8000k -maxrate 8000k -c:v libx264 -pix_fmt yuv420p new_scale.mp4
 
-    #INPUT_NUSCENES_DIR=/media/xruser/REMOTEDRIVING/TOD/TESIS/DATASETS/KITTI_360/KITTI-360/data_2d_raw/2013_05_28_drive_0000_sync/image_02/data_rgb/
+    #INPUT_KITTI_DIR=/media/xruser/REMOTEDRIVING/TOD/TESIS/DATASETS/KITTI_360/KITTI-360/data_2d_raw/2013_05_28_drive_0000_sync/image_02/data_rgb/
     INPUT_KITTI_DIR=$1        
     OUTPUT_DIR=$2
     cd $INPUT_KITTI_DIR

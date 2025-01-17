@@ -1,11 +1,14 @@
 #!/bin/bash
 export INPUT_DIR=$1
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-background_scripts=("phase4_psnr.sh" "phase5_p1204.sh")
+background_scripts=("phase4_psnr.sh" "phase5_p1204.sh phase6_siti_classic_single.sh")
 pids=()
 
 cd $SCRIPT_DIR 
-./phase1_prepare_video.sh $INPUT_DIR NUSCENES /home/xruser/TOD/TESIS/QUALITY2.0/INPUT/NUSCENES/SOURCE
+# Example for KITTI
+#./phase1_prepare_video.sh $INPUT_DIR KITTI /media/xruser/REMOTEDRIVING/TOD/TESIS/DATASETS/KITTI_360/KITTI-360/data_2d_raw/2013_05_28_drive_0000_sync/image_02/data_rgb/
+# Example for ARGO
+./phase1_prepare_video.sh $INPUT_DIR ARGO /home/xruser/TOD/TESIS/DATASETS/ARGODRIVE/sensor/train/08734a1b-0289-3aa3-a6ba-8c7121521e26
 cd $SCRIPT_DIR 
 ./phase2_transcode_qualitites.sh $INPUT_DIR 
 cd $SCRIPT_DIR 

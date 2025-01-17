@@ -11,7 +11,8 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 TMP_DIR=/tmp
 TEMPORARY_FILE=$TMP_DIR/tmp_p1204.csv
 ROOT_DIR=/media/xruser/REMOTEDRIVING/TOD/TESIS/QUALITY2.0
-
+LIST_OF_COLUMNS_TO_BE_REMOVED="SI,TI,INFERENCE_TIME,CARS,BICYCLES,MOTORCYCLES,BUSES,TRUCKS,TRAFFIC_LIGHTS,PERSONS,STOPS_SIGNS,BICYCLES_PCT,MOTORCYCLES_PCT,BUSES_PCT,TRUCKS_PCT,TRAFFIC_LIGHTS_PCT,PERSONS_PCT,STOPS_SIGNS_PCT,INFERENCE_TIME_MS,BITRATE"
+#LIST_OF_COLUMNS_TO_BE_REMOVED="INFERENCE_TIME_MS,BITRATE"
 
 cd ${INPUT_DIR}
 
@@ -21,3 +22,11 @@ do
     echo 'python3 $ROOT_DIR/SCRIPTS/PYTHON/plot_file_param.py ${INPUT_DIR}/file_for_plot.csv "${field} vs Encoded Bitrate" ${field}'
     python3 $ROOT_DIR/SCRIPTS/PYTHON/plot_file_param.py ${INPUT_DIR}/file_for_plot.csv "${field} vs Encoded Bitrate" ${field}
 done
+
+## PLOT CORRELATION MATRIX
+cd ${INPUT_DIR}
+
+python3 $ROOT_DIR/SCRIPTS/PYTHON/remove_columns.py "${INPUT_DIR}/file_for_plot.csv" ${INPUT_DIR}/file_for_correlation_plot.csv $LIST_OF_COLUMNS_TO_BE_REMOVED
+#python3 $ROOT_DIR/SCRIPTS/PYTHON/remove_empty_columns.py "${INPUT_DIR}/file_for_plot.csv" ${INPUT_DIR}/file_for_correlation_plot_temp.csv 
+#python3 $ROOT_DIR/SCRIPTS/PYTHON/remove_columns.py "${INPUT_DIR}/file_for_correlation_plot_temp.csv" ${INPUT_DIR}/file_for_correlation_plot.csv $LIST_OF_COLUMNS_TO_BE_REMOVED
+python3 $ROOT_DIR/SCRIPTS/PYTHON/correlation.py ${INPUT_DIR}/file_for_correlation_plot.csv 

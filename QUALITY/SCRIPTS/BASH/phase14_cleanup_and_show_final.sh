@@ -22,4 +22,4 @@ else
 fi
 mv *mp4 ${INPUT_DIR}/MP4
 rm *yuv
-gwenview *png
+#gwenview *png

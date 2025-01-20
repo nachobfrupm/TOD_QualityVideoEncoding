@@ -41,6 +41,7 @@ function preprocess_comma2k() {
     INPUT_COMMA_DIR=$1    
     OUTPUT_DIR=$2
     cd $INPUT_COMMA_DIR
+    echo "COMMA2K"
 
     ## For COMMA2K (original) 1164x874 ==>
     ## Input is HEVC

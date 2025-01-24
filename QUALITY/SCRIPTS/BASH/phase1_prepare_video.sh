@@ -76,14 +76,119 @@ function preprocess_kitti() {
 
 }
 
+function copy_300_frames_from_dir_to_dir_kitti()
+{
+    source_dir=$1
+    destination_dir=$2
+
+    if [ -d ${destination_dir} ]; then
+        echo "Directory ${destination_dir} already exists, cleaning up"
+        /usr/bin/rm ${destination_dir}/*
+        #/usr/bin/rm -rf ${INPUT_DIR}/TMP/*
+    else
+        mkdir -p ${destination_dir}
+    fi
+
+    # Loop through the range of file names
+    for i in $(seq -w 1000 1300); do
+        file_name="${i}.png"
+        if [ -f "$source_dir/000000$file_name" ]; then
+            cp "$source_dir/000000$file_name" "$destination_dir/"
+            echo "Copied $file_name to $destination_dir"
+        else
+            echo "$file_name does not exist in $source_dir"
+        fi
+    done
+}
+
+
+function preprocess_kitti_advanced() {
+    INPUT_KITTI_DIR=$1        
+    OUTPUT_DIR=$2
+
+    # Example
+    # INPUT_KITTI_DIR=/media/xruser/1TB_KIOXIA/DATASETS/KITTI_360_FULL/KITTI-360/data_2d_raw/2013_05_28_drive_0010_sync
+    # First collect 300 frames from directory
+    
+    cd $INPUT_KITTI_DIR
+    copy_300_frames_from_dir_to_dir_kitti image_02/data_rgb /tmp/subset_left
+    copy_300_frames_from_dir_to_dir_kitti image_03/data_rgb /tmp/subset_right
+    cd /tmp/subset_left
+    ffmpeg -y -framerate 10 -pattern_type glob -i '*.png' -crf 17 -c:v libx264 -pix_fmt yuv420p left_eye.mp4
+    cd /tmp/subset_right
+    ffmpeg -y -framerate 10 -pattern_type glob -i '*.png' -crf 17 -c:v libx264 -pix_fmt yuv420p right_eye.mp4
+    cd /tmp
+    ffmpeg -y -i /tmp/subset_left/left_eye.mp4   -i /tmp/subset_right/right_eye.mp4 -crf 17 -pix_fmt yuv420p -filter_complex hstack -c:a copy dual.mp4
+    ffmpeg -y -i dual.mp4 -vf v360=dfisheye:equirect:ih_fov=192:iv_fov=192:yaw=90 equirectangular_192.mp4
+    ffmpeg -y -i equirectangular_192.mp4 -vf "scale=3072:1536" -c:v libx264 -pix_fmt yuv420p $INPUT_VIDEO_FILE 
+    
+
+    
+}
+function copy_300_frames_from_dir_to_dir_a2d2()
+{
+    source_dir=$1
+    destination_dir=$2
+    prefix=$3
+    start_frame=$4
+    end_frame=$5
+
+    if [ -d ${destination_dir} ]; then
+        echo "Directory ${destination_dir} already exists, cleaning up"
+        /usr/bin/rm ${destination_dir}/*
+        #/usr/bin/rm -rf ${INPUT_DIR}/TMP/*
+    else
+        mkdir -p ${destination_dir}
+    fi
+
+    # Loop through the range of file names
+    for i in $(seq -w $start_frame $end_frame); do
+        file_name="${i}.png"
+        if [ -f "$source_dir/${prefix}${file_name}" ]; then
+            echo "cp $source_dir/${prefix}${file_name} $destination_dir/"
+            cp "$source_dir/${prefix}${file_name}" "$destination_dir/"
+            echo "Copied $file_name to $destination_dir"
+        else
+            # echo "$file_name does not exist in $source_dir"
+            echo "cp $source_dir/${prefix}${file_name} $destination_dir/"
+        fi
+    done
+}
+
+
+function preprocess_a2d2() {
+    #INPUT_A2D2_DIR=/media/xruser/REMOTEDRIVING/TOD/TESIS/DATASETS/A2D2/FULL/camera_lidar/20180810_150607/camera/cam_front_center
+    INPUT_A2D2_DIR=$1
+    OUTPUT_DIR=$2
+    cd $INPUT_A2D2_DIR
+    pwd
+    #echo "ffmpeg -y -framerate 30 -pattern_type glob -i '*.png' -b:v 8000k  -minrate 8000k -maxrate 8000k -c:v libx264 -pix_fmt yuv420p $INPUT_VIDEO_FILE"
+    #ffmpeg -y -framerate 30 -pattern_type glob -i '*.png' -b:v 8000k  -minrate 8000k -maxrate 8000k -c:v libx264 -pix_fmt yuv420p $INPUT_VIDEO_FILE
+    echo "ffmpeg -y -framerate 30 -pattern_type glob -i '*.png' -c:v libx264 -pix_fmt yuv420p $INPUT_VIDEO_FILE"
+    ffmpeg -y -framerate 30 -pattern_type glob -i '*.png' -c:v libx264 -pix_fmt yuv420p $INPUT_VIDEO_FILE
+}
+
+function preprocess_leddartech() {
+    #INPUT_LEDDARTECH_DIR=/media/xruser/1TB_KIOXIA/DATASETS/LEDDARTECH/20200706_162218_part21_4368_7230/subset
+    INPUT_LEDDARTECH_DIR=$1
+    OUTPUT_DIR=$2
+    cd $INPUT_LEDDARTECH_DIR
+    ffmpeg -y -framerate 15 -pattern_type glob -i '*.jpg' -b:v 8000k  -vf "scale=1536:1080" -minrate 8000k -maxrate 8000k -c:v libx264 -pix_fmt yuv420p $INPUT_VIDEO_FILE
+}
+
+
+
 function preprocess_nuscenes() {
     ## For nuscenes
     ## ffmpeg -y -framerate 30 -pattern_type glob -i '*.jpg' -b:v 8000k -vf "scale=1536:900" -minrate 8000k -maxrate 8000k -c:v libx264 -pix_fmt yuv420p new_scale.mp4
     #INPUT_NUSCENES_DIR=/home/xruser/TOD/TESIS/QUALITY2.0/INPUT/NUSCENES/SOURCE
+    echo "Preprocess NUSCENES"
     INPUT_NUSCENES_DIR=$1    
     OUTPUT_DIR=$2
     cd $INPUT_NUSCENES_DIR
-    ffmpeg -y -framerate 30 -pattern_type glob -i '*.jpg' -b:v 8000k -vf "scale=1536:900" -minrate 8000k -maxrate 8000k -c:v libx264 -pix_fmt yuv420p $INPUT_VIDEO_FILE
+    pwd
+    echo " ffmpeg -y -framerate 10 -pattern_type glob -i '*.jpg' -b:v 8000k -vf "scale=1536:900" -minrate 8000k -maxrate 8000k -c:v libx264 -pix_fmt yuv420p $INPUT_VIDEO_FILE"
+    ffmpeg -y -framerate 10 -pattern_type glob -i '*.jpg' -b:v 8000k -vf "scale=1536:900" -minrate 8000k -maxrate 8000k -c:v libx264 -pix_fmt yuv420p $INPUT_VIDEO_FILE
 }
 
 
@@ -92,7 +197,9 @@ if [ "$INPUT_DATASET_TYPE" = "GENERIC" ]; then
     # Just extract mediainfo
     # mediainfo $INPUT_VIDEO_FILE >${INPUT_VIDEO_FILE}.mediainfo
     echo "Generic Type - Doing Nothing"
-
+elif [ "$INPUT_DATASET_TYPE" = "A2D2" ]; then
+    copy_300_frames_from_dir_to_dir_a2d2 $INPUT_DATASET_DIR $INPUT_DATASET_DIR/subset 20190401121727_camera_frontcenter_000000 400 700 
+    preprocess_a2d2 $INPUT_DATASET_DIR/subset $INPUT_DIR
 elif [ "$INPUT_DATASET_TYPE" = "ARGO" ]; then
     preprocess_argodrive $INPUT_DATASET_DIR $INPUT_DIR
 
@@ -105,8 +212,15 @@ elif [ "$INPUT_DATASET_TYPE" = "COMMA2K" ]; then
 elif [ "$INPUT_DATASET_TYPE" = "KITTI" ]; then
     preprocess_kitti $INPUT_DATASET_DIR $INPUT_DIR
 
+elif [ "$INPUT_DATASET_TYPE" = "KITTI_ADVANCED" ]; then
+    preprocess_kitti_advanced $INPUT_DATASET_DIR $INPUT_DIR
+
+
 elif [ "$INPUT_DATASET_TYPE" = "NUSCENES" ]; then
     preprocess_nuscenes $INPUT_DATASET_DIR $INPUT_DIR
+
+elif [ "$INPUT_DATASET_TYPE" = "LEDDARTECH" ]; then
+    preprocess_leddartech $INPUT_DATASET_DIR $INPUT_DIR
 
 fi
 mediainfo $INPUT_VIDEO_FILE >${INPUT_VIDEO_FILE}.mediainfo

@@ -5,6 +5,8 @@ background_scripts=("phase4_psnr.sh" "phase5_p1204.sh phase6_siti_classic_single
 pids=()
 
 cd $SCRIPT_DIR 
+# Example for A2D2
+#./phase1_prepare_video.sh /media/xruser/REMOTEDRIVING/TOD/TESIS/QUALITY2.0/INPUT/MULTI/A2D2_CITIES/Gaimersheim/SEQUENCE01 A2D2 /media/xruser/REMOTEDRIVING/TOD/TESIS/DATASETS/A2D2/FULL/camera_lidar/20180810_150607/camera/cam_front_center
 # Example for KITTI
 #./phase1_prepare_video.sh $INPUT_DIR KITTI /media/xruser/REMOTEDRIVING/TOD/TESIS/DATASETS/KITTI_360/KITTI-360/data_2d_raw/2013_05_28_drive_0000_sync/image_02/data_rgb/
 # Example for APOLLO
@@ -14,13 +16,22 @@ cd $SCRIPT_DIR
 # Example for NUSCENES
 #./phase1_prepare_video.sh $INPUT_DIR NUSCENES /home/xruser/TOD/TESIS/QUALITY2.0/INPUT/NUSCENES/SOURCE
 # Example for GENERIC
-./phase1_prepare_video.sh $INPUT_DIR GENERIC 
+#./phase1_prepare_video.sh $INPUT_DIR A2D2 /media/xruser/REMOTEDRIVING/TOD/TESIS/DATASETS/A2D2/FULL/camera_lidar/20180810_150607/camera/cam_front_center/tmp
+# For Leddartech
+#./phase1_prepare_video.sh $INPUT_DIR LEDDARTECH /media/xruser/1TB_KIOXIA/DATASETS/LEDDARTECH/20200706_162218_part21_4368_7230/subset60
+# For kitti 360 equirectangular
+# echo "Hi"
+#./phase1_prepare_video.sh $INPUT_DIR KITTI_ADVANCED /media/xruser/1TB_KIOXIA/DATASETS/KITTI_360_FULL/KITTI-360/data_2d_raw/2013_05_28_drive_0010_sync
 
+./phase1_prepare_video.sh /media/xruser/REMOTEDRIVING/TOD/TESIS/QUALITY2.0/INPUT/MULTI/A2D2_CITIES/Munich/SEQUENCE_B_01 A2D2  /media/xruser/be69d5a6-c48b-4291-9417-11ba851d3979/DATASETS/A2D2/camera_lidar/20190401_121727/camera/cam_front_center
+
+
+#./phase1_prepare_video.sh $INPUT_DIR GENERIC 
 cd $SCRIPT_DIR 
 
 ./phase2_transcode_qualitites.sh $INPUT_DIR 
-cd $SCRIPT_DIR 
 
+cd $SCRIPT_DIR 
 ./phase3_vmaf.sh $INPUT_DIR 
 cd $SCRIPT_DIR 
 ./phase4_psnr.sh $INPUT_DIR &
@@ -28,6 +39,7 @@ cd $SCRIPT_DIR
 cd $SCRIPT_DIR 
 ./phase5_p1204.sh $INPUT_DIR &
   pids+=($!)
+
 cd $SCRIPT_DIR 
 ./phase6_siti_classic_parallel.sh $INPUT_DIR
 cd $SCRIPT_DIR 

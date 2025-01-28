@@ -198,7 +198,11 @@ if [ "$INPUT_DATASET_TYPE" = "GENERIC" ]; then
     # mediainfo $INPUT_VIDEO_FILE >${INPUT_VIDEO_FILE}.mediainfo
     echo "Generic Type - Doing Nothing"
 elif [ "$INPUT_DATASET_TYPE" = "A2D2" ]; then
-    copy_300_frames_from_dir_to_dir_a2d2 $INPUT_DATASET_DIR $INPUT_DATASET_DIR/subset 20190401121727_camera_frontcenter_000000 400 700 
+    PREFIX=$4
+    # 20190401145936_camera_frontcenter_00
+    START_FRAME=$5
+    END_FRAME=$6
+    copy_300_frames_from_dir_to_dir_a2d2 $INPUT_DATASET_DIR $INPUT_DATASET_DIR/subset $PREFIX $START_FRAME $END_FRAME
     preprocess_a2d2 $INPUT_DATASET_DIR/subset $INPUT_DIR
 elif [ "$INPUT_DATASET_TYPE" = "ARGO" ]; then
     preprocess_argodrive $INPUT_DATASET_DIR $INPUT_DIR

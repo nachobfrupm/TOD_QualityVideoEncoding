@@ -20,7 +20,7 @@ for color, filename in zip(colors, unique_filenames):
     plt.scatter(subset['SI'], subset['TI'], color=color, label=filename, alpha=0.7)
 
 # Add labels and title
-plt.title('Scatter Plot of SI vs TI of ARGODRIVE Sequences')
+plt.title(dataset_name)
 plt.xlabel('SI')
 plt.ylabel('TI')
 plt.grid(True)

@@ -4,6 +4,7 @@ export DATASET_TYPE=$2
 export DATASET_PARAM_01=$3
 export DATASET_PARAM_02=$4
 export DATASET_PARAM_03=$5
+export DATASET_PARAM_04=$6
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 background_scripts=("phase4_psnr.sh" "phase5_p1204.sh phase6_siti_classic_single.sh")
@@ -28,9 +29,10 @@ cd $SCRIPT_DIR
 # echo "Hi"
 #./phase1_prepare_video.sh $INPUT_DIR KITTI_ADVANCED /media/xruser/1TB_KIOXIA/DATASETS/KITTI_360_FULL/KITTI-360/data_2d_raw/2013_05_28_drive_0010_sync
 
-./phase1_prepare_video.sh $INPUT_DIR A2D2  /media/xruser/be69d5a6-c48b-4291-9417-11ba851d3979/DATASETS/A2D2/camera_lidar/20190401_145936/camera/cam_front_center 20190401145936_camera_frontcenter_00000 5800 6100
-
+#./phase1_prepare_video.sh $INPUT_DIR A2D2  /media/xruser/be69d5a6-c48b-4291-9417-11ba851d3979/DATASETS/A2D2/camera_lidar/20190401_145936/camera/cam_front_center 20190401145936_camera_frontcenter_00000 5800 6100
+./phase1_prepare_video.sh $INPUT_DIR $DATASET_TYPE  $DATASET_PARAM_01 $DATASET_PARAM_02 $DATASET_PARAM_03 $DATASET_PARAM_04
 #./phase1_prepare_video.sh $INPUT_DIR GENERIC 
+
 cd $SCRIPT_DIR 
 
 ./phase2_transcode_qualitites.sh $INPUT_DIR 

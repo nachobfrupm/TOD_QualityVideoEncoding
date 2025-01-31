@@ -11,6 +11,9 @@ INPUT_DATASET_DIR=$3
 INPUT_VIDEO_FILE=$INPUT_DIR/input_mp4_file.mp4
 TMP_DIR=/tmp
 
+
+
+
 function preprocess_argodrive() {
 
     #INPUT_ARGO_DIR=/home/xruser/TOD/TESIS/DATASETS/ARGODRIVE/sensor/train/
@@ -51,15 +54,15 @@ function preprocess_comma2k() {
     ## ffmpeg -s:v 1164x874 -r 25 -i video.yuv -vf scale=1280:960 -c:v rawvideo -pix_fmt yuv420p video_resized.yuv
     ## Now produce input for this screen at 8Mbps H264
     ## ffmpeg -s 1280x960 -framerate 25 -y -i video_resized.yuv -c:v libx264 -x264-params "nal-hrd=cbr" -b:v 8000k -bufsize 10000k source_full_duration.mp4
-    ## Finally - Extract 10 seconds and we are ready ( between 30-40s )
+    ## Finally - Extract 10 seconds and we are ready ( between 30-40s ) 
     ##ffmpeg -ss 30 -to 40 -i source_full_duration.mp4 -c copy -avoid_negative_ts make_zero output.mp4}
     ffmpeg -y -i  video.hevc -c:v rawvideo -pixel_format yuv420p $TMP_DIR/video.yuv
     ffmpeg -s:v 1164x874 -r 25 -i $TMP_DIR/video.yuv -vf scale=1280:960 -c:v rawvideo -pix_fmt yuv420p $TMP_DIR/video_resized.yuv
     rm $TMP_DIR/video.yuv
-    ffmpeg -s 1280x960 -framerate 25 -y -i $TMP_DIR/video_resized.yuv -c:v libx264 -x264-params "nal-hrd=cbr" -b:v 8000k -bufsize 10000k $TMP_DIR/source_full_duration.mp4
+    ffmpeg -s 1280x960 -framerate 25 -y -ss 20 -to 30 -i $TMP_DIR/video_resized.yuv -c:v libx264 -x264-params "nal-hrd=cbr" -b:v 8000k -bufsize 10000k $INPUT_VIDEO_FILE
     rm $TMP_DIR/video_resized.yuv
-    ffmpeg -y -ss 30 -to 40 -i $TMP_DIR/source_full_duration.mp4 -c copy -avoid_negative_ts make_zero $INPUT_VIDEO_FILE
-    rm $TMP_DIR/source_full_duration.mp4
+    #ffmpeg -y -ss 20 -to 30 -i $TMP_DIR/source_full_duration.mp4 -c copy -avoid_negative_ts make_zero $INPUT_VIDEO_FILE
+    #rm $TMP_DIR/source_full_duration.mp4
 
 
 }

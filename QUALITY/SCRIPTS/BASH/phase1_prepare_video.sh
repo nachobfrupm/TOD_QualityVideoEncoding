@@ -83,6 +83,8 @@ function copy_300_frames_from_dir_to_dir_kitti()
 {
     source_dir=$1
     destination_dir=$2
+    start_frame=$3
+    end_frame=$4
 
     if [ -d ${destination_dir} ]; then
         echo "Directory ${destination_dir} already exists, cleaning up"
@@ -93,7 +95,7 @@ function copy_300_frames_from_dir_to_dir_kitti()
     fi
 
     # Loop through the range of file names
-    for i in $(seq -w 1000 1300); do
+    for i in $(seq -w $start_frame $end_frame); do
         file_name="${i}.png"
         if [ -f "$source_dir/000000$file_name" ]; then
             cp "$source_dir/000000$file_name" "$destination_dir/"
@@ -106,16 +108,17 @@ function copy_300_frames_from_dir_to_dir_kitti()
 
 
 function preprocess_kitti_advanced() {
-    INPUT_KITTI_DIR=$1        
-    OUTPUT_DIR=$2
+    INPUT_KITTI_DIR=$1            
+    START_FRAME=$2
+    END_FRAME=$3
 
     # Example
     # INPUT_KITTI_DIR=/media/xruser/1TB_KIOXIA/DATASETS/KITTI_360_FULL/KITTI-360/data_2d_raw/2013_05_28_drive_0010_sync
     # First collect 300 frames from directory
     
-    cd $INPUT_KITTI_DIR
-    copy_300_frames_from_dir_to_dir_kitti image_02/data_rgb /tmp/subset_left
-    copy_300_frames_from_dir_to_dir_kitti image_03/data_rgb /tmp/subset_right
+    cd $INPUT_KITTI_DIR 
+    copy_300_frames_from_dir_to_dir_kitti image_02/data_rgb /tmp/subset_left $START_FRAME $END_FRAME
+    copy_300_frames_from_dir_to_dir_kitti image_03/data_rgb /tmp/subset_right $START_FRAME $END_FRAME
     cd /tmp/subset_left
     ffmpeg -y -framerate 10 -pattern_type glob -i '*.png' -crf 17 -c:v libx264 -pix_fmt yuv420p left_eye.mp4
     cd /tmp/subset_right
@@ -186,12 +189,19 @@ function preprocess_nuscenes() {
     ## ffmpeg -y -framerate 30 -pattern_type glob -i '*.jpg' -b:v 8000k -vf "scale=1536:900" -minrate 8000k -maxrate 8000k -c:v libx264 -pix_fmt yuv420p new_scale.mp4
     #INPUT_NUSCENES_DIR=/home/xruser/TOD/TESIS/QUALITY2.0/INPUT/NUSCENES/SOURCE
     echo "Preprocess NUSCENES"
-    INPUT_NUSCENES_DIR=$1    
-    OUTPUT_DIR=$2
+    INPUT_NUSCENES_DIR=$1 
+    START_TIME_SECS=$2
+    END_TIME_SECS=$3
+    
     cd $INPUT_NUSCENES_DIR
     pwd
-    echo " ffmpeg -y -framerate 10 -pattern_type glob -i '*.jpg' -b:v 8000k -vf "scale=1536:900" -minrate 8000k -maxrate 8000k -c:v libx264 -pix_fmt yuv420p $INPUT_VIDEO_FILE"
-    ffmpeg -y -framerate 10 -pattern_type glob -i '*.jpg' -b:v 8000k -vf "scale=1536:900" -minrate 8000k -maxrate 8000k -c:v libx264 -pix_fmt yuv420p $INPUT_VIDEO_FILE
+    #echo " ffmpeg -y -framerate 10 -pattern_type glob -i '*.jpg' -b:v 8000k -vf "scale=1536:900" -minrate 8000k -maxrate 8000k -c:v libx264 -pix_fmt yuv420p $INPUT_VIDEO_FILE"
+    #ffmpeg -y -framerate 10 -pattern_type glob -i '*.jpg' -b:v 8000k -vf "scale=1536:900" -minrate 8000k -maxrate 8000k -c:v libx264 -pix_fmt yuv420p $INPUT_VIDEO_FILE
+    # Just cut 30 seconds from FULL.mp4 
+    # Example of this processing 
+    # cd /media/xruser/be69d5a6-c48b-4291-9417-11ba851d3979/DATASETS/NUSCENES/TRAIN05/sweeps/CAM_FRONT
+    # fmpeg -y -framerate 10 -pattern_type glob -i '*.jpg' -b:v 8000k -vf "scale=1536:900" -minrate 8000k -maxrate 8000k -c:v libx264 -pix_fmt yuv420p ../../FULL.mp4
+    ffmpeg -ss $START_TIME_SECS -to $END_TIME_SECS -i FULL.mp4 -c copy -avoid_negative_ts make_zero $INPUT_VIDEO_FILE
 }
 
 
@@ -218,17 +228,17 @@ elif [ "$INPUT_DATASET_TYPE" = "COMMA2K" ]; then
 
 elif [ "$INPUT_DATASET_TYPE" = "KITTI" ]; then
     preprocess_kitti $INPUT_DATASET_DIR $INPUT_DIR
-
 elif [ "$INPUT_DATASET_TYPE" = "KITTI_ADVANCED" ]; then
-    preprocess_kitti_advanced $INPUT_DATASET_DIR $INPUT_DIR
-
-
+    START_FRAME=$4
+    END_FRAME=$5
+    preprocess_kitti_advanced $INPUT_DATASET_DIR $START_FRAME $END_FRAME
 elif [ "$INPUT_DATASET_TYPE" = "NUSCENES" ]; then
-    preprocess_nuscenes $INPUT_DATASET_DIR $INPUT_DIR
+    START_TIME_SECS=$4
+    END_TIME_SECS=$5
+    preprocess_nuscenes $INPUT_DATASET_DIR $START_TIME_SECS $END_TIME_SECS
 
 elif [ "$INPUT_DATASET_TYPE" = "LEDDARTECH" ]; then
     preprocess_leddartech $INPUT_DATASET_DIR $INPUT_DIR
-
 fi
 mediainfo $INPUT_VIDEO_FILE >${INPUT_VIDEO_FILE}.mediainfo
 echo "=================================================================================================="

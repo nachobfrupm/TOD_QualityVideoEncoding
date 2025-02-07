@@ -179,7 +179,7 @@ function preprocess_leddartech() {
     INPUT_LEDDARTECH_DIR=$1
     OUTPUT_DIR=$2
     cd $INPUT_LEDDARTECH_DIR
-    ffmpeg -y -framerate 15 -pattern_type glob -i '*.jpg' -b:v 8000k  -vf "scale=1536:1080" -minrate 8000k -maxrate 8000k -c:v libx264 -pix_fmt yuv420p $INPUT_VIDEO_FILE
+    ffmpeg -y -framerate 10 -pattern_type glob -i '*.jpg' -b:v 8000k  -vf "scale=1536:1080" -minrate 8000k -maxrate 8000k -c:v libx264 -pix_fmt yuv420p $INPUT_VIDEO_FILE
 }
 
 

@@ -72,9 +72,9 @@ ls -altr ${INPUT_DIR}/*mp4
 for input_mp4_file in $(ls ${INPUT_DIR}/*mp4)
 do    
     #echo "BITRATE,VMAF,PSNR,SI,TI,P1204_3_MOS,VCA_E,VCA_H,EVCA_SC,EVCA_TC,CARS,INFERENCE_TIME_MS" > ${input_mp4_file}.csv
-    echo "BITRATE,VMAF,PSNR,SI,TI,P1204_3_MOS,VCA_E,VCA_H,EVCA_SC,EVCA_TC,COVER_SSC,COVER_TSC,COVER_ASC,COVER_FSC,INFERENCE_TIME_MS,CARS,BICYCLES,MOTORCYCLES,BUSES,TRUCKS,TRAFFIC_LIGHTS,PERSONS,STOPS_SIGNS" > ${input_mp4_file}.csv
+    echo "BITRATE,VMAF,PSNR,SI,TI,P1204_3_MOS,VCA_E,VCA_H,EVCA_SC,EVCA_TC,COVER_SSC,COVER_TSC,COVER_ASC,COVER_FSC,INFERENCE_TIME_MS,CARS,BICYCLES,MOTORCYCLES,BUSES,TRUCKS,TRAFFIC_LIGHTS,PERSONS,STOPS_SIGNS.LD_PCT" > ${input_mp4_file}.csv
     file_bitrate_kbps=$(ffprobe -i $input_mp4_file 2>&1 |grep bitrate|cut -d ":" -f 6|cut -d " " -f2)
-    echo "${file_bitrate_kbps},,,,,,,,,,,,,,,,,,,,,,">> ${input_mp4_file}.csv
+    echo "${file_bitrate_kbps},,,,,,,,,,,,,,,,,,,,,,,">> ${input_mp4_file}.csv
                               
                               
 done

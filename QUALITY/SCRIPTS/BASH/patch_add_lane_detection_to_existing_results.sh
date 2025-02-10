@@ -16,5 +16,6 @@ cd $SCRIPT_DIR
 ./phase10_b_lane_detection.sh $INPUT_DIR
 ./phase11_add_pcts.sh $INPUT_DIR
 ./phase12_plot_files.sh $INPUT_DIR
-./phase14_cleanup_and_show_final $INPUT_DIR
+cd $SCRIPT_DIR
+./phase14_cleanup_and_show_final.sh $INPUT_DIR
 

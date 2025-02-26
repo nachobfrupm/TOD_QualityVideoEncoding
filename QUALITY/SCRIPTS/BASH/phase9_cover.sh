@@ -23,6 +23,7 @@ fi
 # STAGE 9 COVER
 cd ${ROOT_DIR}/ALGORITHMS/COVER/COVER
 ENV_PATH=${ROOT_DIR}/ALGORITHMS/COVER/cover/bin/activate        
+echo "python evaluate_a_set_of_videos.py -i  ${INPUT_DIR} --output  ${INPUT_DIR}/cover.csv"
 bash --rcfile $ENV_PATH -i  -c "python evaluate_a_set_of_videos.py -i  ${INPUT_DIR} --output  ${INPUT_DIR}/cover.csv ; exit 0"                                                             
 
 cd $INPUT_DIR

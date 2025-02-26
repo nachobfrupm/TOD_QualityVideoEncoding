@@ -38,10 +38,10 @@ echo $FPS_ORIGINAL_VIDEO
 ## First encode "master" at 8Mbps
 BIT_RATE=8000
 echo "========================================================================================="
-echo "ffmpeg -s ${INPUT_WIDTH}x${INPUT_HEIGHT} -framerate $FPS_ORIGINAL_VIDEO -y -i ${INPUT_FILE}.yuv -c:v libx264 -x264-params "nal-hrd=cbr" -b:v ${BIT_RATE}k -bufsize 10000k $MASTER_VIDEO_FILE"
+echo "ffmpeg -s ${INPUT_WIDTH}x${INPUT_HEIGHT} -framerate $FPS_ORIGINAL_VIDEO  -y -i ${INPUT_FILE}.yuv -c:v libx264 -x264-params "nal-hrd=cbr" -g 30 -bf 0-b:v ${BIT_RATE}k -bufsize 500k $MASTER_VIDEO_FILE"
 echo "========================================================================================="
-echo "***********************************************************************************************************"
-ffmpeg -s ${INPUT_WIDTH}x${INPUT_HEIGHT} -framerate $FPS_ORIGINAL_VIDEO -y -i ${INPUT_FILE}.yuv -c:v libx264 -x264-params "nal-hrd=cbr" -b:v ${BIT_RATE}k -bufsize 10000k $MASTER_VIDEO_FILE > $MASTER_VIDEO_FILE.stats 2>&1 
+
+ffmpeg -s ${INPUT_WIDTH}x${INPUT_HEIGHT} -framerate $FPS_ORIGINAL_VIDEO  -y -i ${INPUT_FILE}.yuv -c:v libx264 -x264-params "nal-hrd=cbr" -g 30 -bf 0 -b:v ${BIT_RATE}k -bufsize 500k $MASTER_VIDEO_FILE
 
 for BIT_RATE in $BIT_RATES
     do
@@ -54,10 +54,7 @@ for BIT_RATE in $BIT_RATES
         
     #ffmpeg -y -i ${INPUT_FILE}_${BIT_RATE}.ts -c:v copy ${INPUT_FILE}_AT_${BIT_RATE}.mp4
     #/usr/bin/rm ${INPUT_FILE}_${BIT_RATE}.ts
-    echo "********************************************************************"
-    echo "ffmpeg -s ${INPUT_WIDTH}x${INPUT_HEIGHT} -framerate $FPS_ORIGINAL_VIDEO -y -i ${INPUT_FILE}.yuv -c:v libx264 -x264-params "nal-hrd=cbr" -b:v ${BIT_RATE}k -bufsize 10000k ${INPUT_FILE}_AT_${BIT_RATE}.mp4"
-
-    ffmpeg -s ${INPUT_WIDTH}x${INPUT_HEIGHT} -framerate $FPS_ORIGINAL_VIDEO -y -i ${INPUT_FILE}.yuv -c:v libx264 -x264-params "nal-hrd=cbr" -b:v ${BIT_RATE}k -bufsize 10000k ${INPUT_FILE}_AT_${BIT_RATE}.mp4 > ${INPUT_FILE}_AT_${BIT_RATE}.mp4.stats 2>&1 
+    ffmpeg -s ${INPUT_WIDTH}x${INPUT_HEIGHT} -framerate $FPS_ORIGINAL_VIDEO  -y -i ${INPUT_FILE}.yuv -c:v libx264 -x264-params "nal-hrd=cbr" -g 30 -bf 0 -b:v ${BIT_RATE}k -bufsize 500k ${INPUT_FILE}_AT_${BIT_RATE}.mp4 > ${INPUT_FILE}_AT_${BIT_RATE}.mp4.stats 2>&1 
 
 done
 echo "/usr/bin/rm $INPUT_FILE"

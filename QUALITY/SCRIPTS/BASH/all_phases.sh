@@ -30,7 +30,6 @@ cd $SCRIPT_DIR
 # For kitti 360 equirectangular
 # echo "Hi"
 #./phase1_prepare_video.sh $INPUT_DIR KITTI_ADVANCED /media/xruser/1TB_KIOXIA/DATASETS/KITTI_360_FULL/KITTI-360/data_2d_raw/2013_05_28_drive_0010_sync
-./phase1_prepare_video.sh $INPUT_DIR $DATASET_TYPE $DATASET_PARAM_01 $DATASET_PARAM_02 $DATASET_PARAM_03 $DATASET_PARAM_04
 # ARGO
 #./phase1_prepare_video.sh $INPUT_DIR $DATASET_TYPE $DATASET_PARAM_01
 #./phase1_prepare_video.sh $INPUT_DIR A2D2  /media/xruser/be69d5a6-c48b-4291-9417-11ba851d3979/DATASETS/A2D2/camera_lidar/20190401_145936/camera/cam_front_center 20190401145936_camera_frontcenter_00000 5800 6100
@@ -39,8 +38,12 @@ cd $SCRIPT_DIR
 #./phase1_prepare_video.sh $INPUT_DIR GENERIC 
 
 
+./phase1_prepare_video.sh $INPUT_DIR $DATASET_TYPE $DATASET_PARAM_01 $DATASET_PARAM_02 $DATASET_PARAM_03 $DATASET_PARAM_04
+
+
 cd $SCRIPT_DIR 
 ./phase2_transcode_qualitites.sh $INPUT_DIR 
+#./phase2_transcode_qualitites_low_latency_01.sh $INPUT_DIR 
 cd $SCRIPT_DIR 
 ./phase3_vmaf.sh $INPUT_DIR 
 cd $SCRIPT_DIR 

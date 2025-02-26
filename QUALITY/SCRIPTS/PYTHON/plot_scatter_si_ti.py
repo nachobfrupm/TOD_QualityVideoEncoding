@@ -30,5 +30,5 @@ plt.legend(title='Filename', loc='center left', bbox_to_anchor=(1, 0.5))
 
 # Display the plot
 plt.tight_layout()
-plt.show()
+#plt.show()
 plt.savefig("scatter_si_ti.png", dpi=320)

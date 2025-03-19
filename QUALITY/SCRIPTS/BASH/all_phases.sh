@@ -37,9 +37,7 @@ cd $SCRIPT_DIR
 
 #./phase1_prepare_video.sh $INPUT_DIR GENERIC 
 
-
 ./phase1_prepare_video.sh $INPUT_DIR $DATASET_TYPE $DATASET_PARAM_01 $DATASET_PARAM_02 $DATASET_PARAM_03 $DATASET_PARAM_04
-
 
 cd $SCRIPT_DIR 
 ./phase2_transcode_qualitites.sh $INPUT_DIR 
@@ -68,6 +66,21 @@ for pid in "${pids[@]}"; do
   wait $pid
 done
 
+cd $INPUT_DIR
+pwd
+cp MP4/* .
+
+cd $SCRIPT_DIR
+#./add_new_empty_field_to_mp4_csvs.sh $INPUT_DIR LD_PCT 0.0
+./phase10_b_v2_lane_detection.sh $INPUT_DIR
+./phase11_add_pcts_V2.sh $INPUT_DIR
+./phase12_plot_files_V2.sh $INPUT_DIR
+cd $SCRIPT_DIR
+./phase14_cleanup_and_show_final.sh $INPUT_DIR
+exit 0
+
+
+### Old code
 ./phase10_b_lane_detection.sh $INPUT_DIR
 cd $SCRIPT_DIR
 ./phase11_add_pcts.sh $INPUT_DIR

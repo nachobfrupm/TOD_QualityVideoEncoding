@@ -9,7 +9,7 @@ Based on shell and python scripts
 2. [Initial Preparation](#preparation) <br/>
    2.1. [Cloning the repository](#cloning) <br/>
    2.2. [Input Dataset Preparation](#inputdataset) <br/>
-3. [External Tools Setuph](#setup_ext)
+3. [External Tools Setuph](#setup_ext)  
     3.1. [VMAF](#vmaf_setup) 
 4. [Execution and Data Collection](#execution)  
 5. [Description of Additional Scripts](#description)  

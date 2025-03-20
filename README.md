@@ -9,6 +9,7 @@ Based on shell and python scripts
 2. [Initial Preparation](#preparation) <br/>
    2.1. [Cloning the repository](#cloning) <br/>
    2.2. [Input Dataset Preparation](#inputdataset) <br/>
+   2.3. [Environment variables configuration](#envvariables) <br/>
 3. [External Tools Setup](#setup_ext)  
     3.1. [VMAF](#vmaf_setup)  
     3.2. [PSNR](#vmaf_setup)   
@@ -42,7 +43,11 @@ All the required scripts to execute this exercise from scratch as well as the in
       chmod -R 755 *      
    ~~~
 <a name="inputdataset"></a>
-### 2.1. Input DataSet Preparation
+### 2.2. Input DataSet Preparation
+
+<a name="inputdataset"></a>
+### 2.3. Environment Variables Configuration
+
 
 
 
@@ -51,12 +56,11 @@ All the required scripts to execute this exercise from scratch as well as the in
 
 <a name="execution"></a>
 ## 4. Execution and Data Collection
-~~~console
-  git clone TOD_QualityVideoEncoding
-  cd TOD_QualityVideoEncoding/QUALITY
-
-  console.log("Hello World")
-~~~  
+   ~~~shell
+      cd TOD_QualityVideoEncoding/QUALITY/
+      cd TOD_QualityVideoEncoding/QUALITY
+      chmod -R 755 *      
+   ~~~
 
 <a name="description"></a>
 ## 5. Description of Additional Scripts

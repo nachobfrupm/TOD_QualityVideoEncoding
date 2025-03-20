@@ -9,8 +9,9 @@ export INPUT_DIR=$1
 export INPUT_FILE=$2
 TMP_DIR=/tmp
 TEMPORARY_FILE=$TMP_DIR/tmp_${INPUT_FILE}.csv
-ROOT_DIR=/media/xruser/REMOTEDRIVING/TOD/TESIS/QUALITY2.0
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ROOT_DIR=$SCRIPT_DIR/../..
+
 
 cd $INPUT_DIR
 TMP_JSON_FILE=${INPUT_DIR}/TMP/${INPUT_FILE}_siti_out.json

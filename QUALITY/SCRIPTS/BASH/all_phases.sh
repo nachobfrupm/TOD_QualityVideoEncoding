@@ -12,32 +12,33 @@ pids=()
 
 cd $SCRIPT_DIR 
 
-# Example for ARGO
 
 
-# Example for KITTI
-#./phase1_prepare_video.sh $INPUT_DIR KITTI /media/xruser/REMOTEDRIVING/TOD/TESIS/DATASETS/KITTI_360/KITTI-360/data_2d_raw/2013_05_28_drive_0000_sync/image_02/data_rgb/
-# Example for APOLLO
-#./phase1_prepare_video.sh $INPUT_DIR APOLLO /media/xruser/REMOTEDRIVING/TOD/TESIS/DATASETS/APOLLOSCAPE/3d_car_instance_sample/3d_car_instance_sample/images
+
 # Example for COMMA2K
 #./phase1_prepare_video.sh $INPUT_DIR COMMA2K "/media/xruser/REMOTEDRIVING/TOD/TESIS/DATASETS/comma2k19/Chunk_1/b0c9d2329ad1606b|2018-08-01--21-13-49/6"
 # Example for NUSCENES
 #./phase1_prepare_video.sh $INPUT_DIR NUSCENES /home/xruser/TOD/TESIS/QUALITY2.0/INPUT/NUSCENES/SOURCE
-# Example for GENERIC
-#./phase1_prepare_video.sh $INPUT_DIR A2D2 /media/xruser/REMOTEDRIVING/TOD/TESIS/DATASETS/A2D2/FULL/camera_lidar/20180810_150607/camera/cam_front_center/tmp
 # For Leddartech
 #./phase1_prepare_video.sh $INPUT_DIR LEDDARTECH /media/xruser/1TB_KIOXIA/DATASETS/LEDDARTECH/20200706_162218_part21_4368_7230/subset60
 # For kitti 360 equirectangular
-# echo "Hi"
 #./phase1_prepare_video.sh $INPUT_DIR KITTI_ADVANCED /media/xruser/1TB_KIOXIA/DATASETS/KITTI_360_FULL/KITTI-360/data_2d_raw/2013_05_28_drive_0010_sync
 # ARGO
 #./phase1_prepare_video.sh $INPUT_DIR $DATASET_TYPE $DATASET_PARAM_01
 #./phase1_prepare_video.sh $INPUT_DIR A2D2  /media/xruser/be69d5a6-c48b-4291-9417-11ba851d3979/DATASETS/A2D2/camera_lidar/20190401_145936/camera/cam_front_center 20190401145936_camera_frontcenter_00000 5800 6100
+
+# I M P O R T A N T ! ! !
+
+# Asumption there is single mp4 file in INPUT_DIR Encoded at 8Mbps 
+# PHASE 1 is very customized and you should be able to develop your own scripts
+# Please see examples above to check how to deal with A2D2,Argoverse,COMMA2k,KITTI360,NUSECENES AND LEDDARTECH
+
+# Should you need to generate the master file uncomment the following line and pass the appropriate parameters from outside as per the examples above
+# e.g. ./all_phases.sh /home/user/QualityVideoEncoding/QUALITY/INPUT_DIR A2D2 /media/xruser/be69d5a6-c48b-4291-9417-11ba851d3979/DATASETS/A2D2/camera_lidar/20190401_145936/camera/cam_front_center 20190401145936_camera_frontcenter_00000 5800 6100
 #./phase1_prepare_video.sh $INPUT_DIR $DATASET_TYPE  $DATASET_PARAM_01 $DATASET_PARAM_02 $DATASET_PARAM_03 $DATASET_PARAM_04
 
-#./phase1_prepare_video.sh $INPUT_DIR GENERIC 
+# I M P O R T A N T ! ! !
 
-./phase1_prepare_video.sh $INPUT_DIR $DATASET_TYPE $DATASET_PARAM_01 $DATASET_PARAM_02 $DATASET_PARAM_03 $DATASET_PARAM_04
 
 cd $SCRIPT_DIR 
 ./phase2_transcode_qualitites.sh $INPUT_DIR 

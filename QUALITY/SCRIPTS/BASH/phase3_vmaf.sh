@@ -11,6 +11,9 @@ MASTER_VIDEO_FILE=${INPUT_DIR}/master_mp4_file.mp4
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 TMP_DIR=/tmp
 TEMPORARY_FILE=$TMP_DIR/tmp.csv
+ROOT_DIR=$SCRIPT_DIR/../..
+VMAF_BINARY_FULL_PATH=$ROOT_DIR/BIN/vmaf
+
 
 # ##########################################################################################################
 # STAGE 3 VMAF CALCULATION

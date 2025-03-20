@@ -1,7 +1,8 @@
 #!/bin/bash
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 INPUT_DIR=$1
-ROOT_DIR=/media/xruser/REMOTEDRIVING/TOD/TESIS/QUALITY2.0
+ROOT_DIR=$SCRIPT_DIR/../..
+
 cd $INPUT_DIR
 SUFFIX=$(basename $INPUT_DIR)
 TMP_DIR=/tmp/TMPLOT_${SUFFIX}

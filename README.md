@@ -7,8 +7,8 @@ Based on shell and python scripts
 # Table of contents  
 1. [Introduction](#introduction)  
 2. [Initial Preparation](#preparation)
-   2.1. [Cloning the repository](#cloning)<br/>
-   2.2. [Input Dataset Preparation](#inputdataset)<br/>
+   2.1. [Cloning the repository](#cloning) <br/>
+   2.2. [Input Dataset Preparation](#inputdataset) <br/>
 4. [External Tools Setuph](#setup_ext)  
     3.1. [VMAF](#vmaf_setup)  
 5. [Execution and Data Collection](#execution)  

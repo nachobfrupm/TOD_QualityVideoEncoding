@@ -6,12 +6,14 @@ Based on shell and python scripts
 
 # Table of contents  
 1. [Introduction](#introduction)  
-2. [Input Dataset Preparation](#preparation)  
-3. [External Tools Setuph](#setup_ext)  
+2. [Initial Preparation](#preparation)
+   2.1. [Cloning the repository](#cloning)
+   2.2. [Input Dataset Preparation](#inputdataset)
+4. [External Tools Setuph](#setup_ext)  
     3.1. [VMAF](#vmaf_setup)  
-4. [Execution and Data Collection](#execution)  
-5. [Description of Additional Scripts](#description)  
-6. [Assoociated Paper](#paper)
+5. [Execution and Data Collection](#execution)  
+6. [Description of Additional Scripts](#description)  
+7. [Assoociated Paper](#paper)
 
 
 <a name="introduction"></a>
@@ -20,6 +22,34 @@ Traditional video quality metrics like VMAF, PSNR, and SI-TI evaluate media qual
 A new dataset with video quality and object detection metrics at different bitrates is available in this repository.<br/>
 All the required scripts to execute this exercise from scratch as well as the instructions to setup the required tools is available here.<br/>
 ![image](https://github.com/user-attachments/assets/4a4cca45-d741-4c07-ac79-9876da2b5d12)
+
+<a name="preparation"></a>
+## 2. Input Dataset Preparation
+### 2.1. Cloning the Repository
+    ~~~console
+      git clone TOD_QualityVideoEncoding
+      cd TOD_QualityVideoEncoding/QUALITY
+      chmod -R 755 *      
+    ~~~  
+
+
+<a name="setup_ext"></a>
+## 3. External Tools Setup
+
+<a name="execution"></a>
+## 4. Execution and Data Collection
+~~~console
+  git clone TOD_QualityVideoEncoding
+  cd TOD_QualityVideoEncoding/QUALITY
+
+  console.log("Hello World")
+~~~  
+
+<a name="description"></a>
+## 5. Description of Additional Scripts
+
+<a name="paper"></a>
+## 6. Associated Paper
 
 
 

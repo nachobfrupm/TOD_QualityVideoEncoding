@@ -9,11 +9,11 @@ Based on shell and python scripts
 2. [Initial Preparation](#preparation) <br/>
    2.1. [Cloning the repository](#cloning) <br/>
    2.2. [Input Dataset Preparation](#inputdataset) <br/>
-4. [External Tools Setuph](#setup_ext)
+3. [External Tools Setuph](#setup_ext)
     3.1. [VMAF](#vmaf_setup) 
-5. [Execution and Data Collection](#execution)  
-6. [Description of Additional Scripts](#description)  
-7. [Assoociated Paper](#paper)
+4. [Execution and Data Collection](#execution)  
+5. [Description of Additional Scripts](#description)  
+6. [Assoociated Paper](#paper)
 
 
 <a name="introduction"></a>

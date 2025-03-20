@@ -26,7 +26,7 @@ All the required scripts to execute this exercise from scratch as well as the in
 <a name="preparation"></a>
 ## 2. Input Dataset Preparation
 ### 2.1. Cloning the Repository
-    ~~~sh
+    ~~~bash
       git clone TOD_QualityVideoEncoding
       cd TOD_QualityVideoEncoding/QUALITY
       chmod -R 755 *      

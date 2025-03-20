@@ -19,6 +19,7 @@ Based on shell and python scripts
 Traditional video quality metrics like VMAF, PSNR, and SI-TI evaluate media quality, whereas newer metrics such as ITU-P.1204.3, VCA, and EVCA have broadened the evaluation of visual complexity. In emerging areas like Tele-Operated Driving, video quality is critical for remote applications, which encounter challenges due to the complexities of testing. In the realm of self-driving technology, video quality influences CNNs used for object detection, with research investigating how bitrate affects detection performance through the use of large datasets. <br/>
 A new dataset with video quality and object detection metrics at different bitrates is available in this repository.<br/>
 All the required scripts to execute this exercise from scratch as well as the instructions to setup the required tools is available here.<br/>
+![image](https://github.com/user-attachments/assets/4a4cca45-d741-4c07-ac79-9876da2b5d12)
 
 
 

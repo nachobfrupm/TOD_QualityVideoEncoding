@@ -9,8 +9,17 @@ Based on shell and python scripts
 2. [Initial Preparation](#preparation) <br/>
    2.1. [Cloning the repository](#cloning) <br/>
    2.2. [Input Dataset Preparation](#inputdataset) <br/>
-3. [External Tools Setuph](#setup_ext)  
-    3.1. [VMAF](#vmaf_setup) 
+3. [External Tools Setup](#setup_ext)  
+    3.1. [VMAF](#vmaf_setup)
+    3.2. [PSNR](#vmaf_setup)  
+    3.3. [ITU-P.1204.3](#itup12043)   
+    3.4. [VCA](#VCA)  
+    3.5. [EVCA](#EVCA)
+    3.6. [COVER](#COVER)  
+    3.7. [YOLOV7](#YOLOV7)  
+    3.8. [YOLOPV2](#YOLOPV2)
+    3.9. [PYTHON LIBRARIES](#PYTHONLIBS) 
+   
 4. [Execution and Data Collection](#execution)  
 5. [Description of Additional Scripts](#description)  
 6. [Assoociated Paper](#paper)
@@ -25,12 +34,16 @@ All the required scripts to execute this exercise from scratch as well as the in
 
 <a name="preparation"></a>
 ## 2. Input Dataset Preparation
+<a name="cloning"></a>
 ### 2.1. Cloning the Repository
    ~~~console
       git clone TOD_QualityVideoEncoding
       cd TOD_QualityVideoEncoding/QUALITY
       chmod -R 755 *      
    ~~~
+<a name="inputdataset"></a>
+### 2.1. Input DataSet Preparation
+
 
 
 <a name="setup_ext"></a>

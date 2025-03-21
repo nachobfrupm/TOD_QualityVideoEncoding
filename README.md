@@ -45,6 +45,11 @@ All the required scripts to execute this exercise from scratch as well as the in
 <a name="inputdataset"></a>
 ### 2.2. Input DataSet Preparation
 
+Create the directory in which you place your MP4 input file at 8Mbps
+For example
+mkdir /home/user/data/MyIndividualSequence/
+cp <preprocess_directory> /home/user/data/MyIndividualSequence/themasterfile.mp4
+
 <a name="inputdataset"></a>
 ### 2.3. Environment Variables Configuration
 
@@ -90,8 +95,9 @@ Please read Readme.MD file under ALGORITHMS/YOLOPV2 folder in this repository
 <a name="execution"></a>
 ## 4. Execution and Data Collection
    ~~~shell
-      cd TOD_QualityVideoEncoding/QUALITY/
-      cd TOD_QualityVideoEncoding/QUALITY
+      cd TOD_QualityVideoEncoding/QUALITY/SCRIPTS/BASH
+      #Following the example started in 2.2
+      ./all_phases.sh /home/user/data/MyIndividualSequence
       chmod -R 755 *      
    ~~~
 

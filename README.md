@@ -12,7 +12,7 @@ Based on shell and python scripts
    2.3. [Environment variables configuration](#envvariables) <br/>
 3. [External Tools Setup](#setup_ext)  
     3.1. [VMAF](#vmaf_setup)  
-    3.2. [PSNR](#vmaf_setup)   
+    3.2. [PSNR](#psnr_setup)   
     3.3. [ITU-P.1204.3](#itup12043)   
     3.4. [VCA](#VCA)   
     3.5. [EVCA](#EVCA)  
@@ -56,6 +56,31 @@ All the required scripts to execute this exercise from scratch as well as the in
 <a name="vmaf_setup"></a>
 ### 3.1.VMAF 
 Please read Readme.MD file under ALGORITHMS/VMAF folder in this repository
+
+<a name="psnr_setup"></a>
+### 3.2.PSNR 
+Please read Readme.MD file under ALGORITHMS/PSNR folder in this repository
+
+<a name="itup12043"></a>
+### 3.3.ITU-P.1204.3
+Please read Readme.MD file under ALGORITHMS/ITUP12043 folder in this repository
+
+<a name="VCA"></a>
+### 3.4.VCA  
+Please read Readme.MD file under ALGORITHMS/VCA folder in this repository
+
+<a name="EVCA"></a>
+### 3.5.EVCA  
+Please read Readme.MD file under ALGORITHMS/EVCA folder in this repository
+
+<a name="vmaf_setup"></a>
+### 3.6.COVER 
+Please read Readme.MD file under ALGORITHMS/VMAF folder in this repository
+
+<a name="vmaf_setup"></a>
+### 3.1.VMAF 
+Please read Readme.MD file under ALGORITHMS/VMAF folder in this repository
+
 
 <a name="execution"></a>
 ## 4. Execution and Data Collection

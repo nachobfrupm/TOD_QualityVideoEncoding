@@ -44,6 +44,12 @@ All the required scripts to execute this exercise from scratch as well as the in
    ~~~
 <a name="inputdataset"></a>
 ### 2.2. Input DataSet Preparation
+Preparation of your MP4 origin file is a task that it is not automated in this environment.  
+However, some convenient scripts have been developed to do this in the source autonomous driving dataset used: A2D2,Argoverse2,Comma2K,Kitti360,NuScenes and Leddartech 
+
+
+
+
 
 Create the directory in which you place your MP4 input file at 8Mbps
 For example

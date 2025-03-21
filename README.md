@@ -106,8 +106,22 @@ Please read Readme.MD file under ALGORITHMS/COVER folder in this repository
 Please read Readme.MD file under ALGORITHMS/YOLOV7 folder in this repository
 
 <a name="YOLOPV2"></a>
-### 3.7.YOLOPV2 
+### 3.8.YOLOPV2 
 Please read Readme.MD file under ALGORITHMS/YOLOPV2 folder in this repository
+
+<a name="PYTHONLIBS"></a>
+### 3.9.PYTHON LIBRARIES 
+The tools described above will run in their own virtualenvironment and the instruction to install the required packages can be found either in the README.MD file under them or in the original tool 
+
+from tabulate import tabulate
+import csv
+import cv2
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+import pyarrow.feather as feather
+import seaborn as sns
+import sys
 
 
 

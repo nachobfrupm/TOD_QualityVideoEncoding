@@ -53,6 +53,9 @@ All the required scripts to execute this exercise from scratch as well as the in
 
 <a name="setup_ext"></a>
 ## 3. External Tools Setup
+<a name="vmaf_setup"></a>
+### 3.1.VMAF 
+Please read Readme.MD file under ALGORITHMS/VMAF folder in this repository
 
 <a name="execution"></a>
 ## 4. Execution and Data Collection

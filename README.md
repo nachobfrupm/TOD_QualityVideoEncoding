@@ -47,14 +47,27 @@ All the required scripts to execute this exercise from scratch as well as the in
 Preparation of your MP4 origin file is a task that it is not automated in this environment.  
 However, some convenient scripts have been developed to do this in the source autonomous driving dataset used: A2D2,Argoverse2,Comma2K,Kitti360,NuScenes and Leddartech 
 
+   ~~~shell
+# Example for COMMA2K
+#./phase1_prepare_video.sh $INPUT_DIR COMMA2K "/media/xruser/REMOTEDRIVING/TOD/TESIS/DATASETS/comma2k19/Chunk_1/b0c9d2329ad1606b|2018-08-01--21-13-49/6"
+# Example for NUSCENES
+#./phase1_prepare_video.sh $INPUT_DIR NUSCENES /home/xruser/TOD/TESIS/QUALITY2.0/INPUT/NUSCENES/SOURCE
+# For Leddartech
+#./phase1_prepare_video.sh $INPUT_DIR LEDDARTECH /media/xruser/1TB_KIOXIA/DATASETS/LEDDARTECH/20200706_162218_part21_4368_7230/subset60
+# For kitti 360 equirectangular
+#./phase1_prepare_video.sh $INPUT_DIR KITTI_ADVANCED /media/xruser/1TB_KIOXIA/DATASETS/KITTI_360_FULL/KITTI-360/data_2d_raw/2013_05_28_drive_0010_sync
+# ARGO
+#./phase1_prepare_video.sh $INPUT_DIR $DATASET_TYPE $DATASET_PARAM_01
+#./phase1_prepare_video.sh $INPUT_DIR A2D2  /media/xruser/be69d5a6-c48b-4291-9417-11ba851d3979/DATASETS/A2D2/camera_lidar/20190401_145936/camera/cam_front_center 20190401145936_camera_frontcenter_00000 5800 6100
+   ~~~
 
-
-
-
-Create the directory in which you place your MP4 input file at 8Mbps
-For example
+In case you have your own MP4 as source you need to have it encoded at 8Mbps
+   ~~~shell
+#Example 
+#Create the directory in which you place your MP4 input file at 8Mbps 
 mkdir /home/user/data/MyIndividualSequence/
 cp <preprocess_directory> /home/user/data/MyIndividualSequence/themasterfile.mp4
+   ~~~
 
 <a name="inputdataset"></a>
 ### 2.3. Environment Variables Configuration

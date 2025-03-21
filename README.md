@@ -63,7 +63,7 @@ Please read Readme.MD file under ALGORITHMS/PSNR folder in this repository
 
 <a name="itup12043"></a>
 ### 3.3.ITU-P.1204.3
-Please read Readme.MD file under ALGORITHMS/ITUP12043 folder in this repository
+Please read Readme.MD file under ALGORITHMS/bitstream_mode3_p1204_3 folder in this repository
 
 <a name="VCA"></a>
 ### 3.4.VCA  
@@ -73,13 +73,18 @@ Please read Readme.MD file under ALGORITHMS/VCA folder in this repository
 ### 3.5.EVCA  
 Please read Readme.MD file under ALGORITHMS/EVCA folder in this repository
 
-<a name="vmaf_setup"></a>
+<a name="COVER"></a>
 ### 3.6.COVER 
-Please read Readme.MD file under ALGORITHMS/VMAF folder in this repository
+Please read Readme.MD file under ALGORITHMS/COVER folder in this repository
 
-<a name="vmaf_setup"></a>
-### 3.1.VMAF 
-Please read Readme.MD file under ALGORITHMS/VMAF folder in this repository
+<a name="YOLOV7"></a>
+### 3.7.YOLOV7 
+Please read Readme.MD file under ALGORITHMS/YOLOV7 folder in this repository
+
+<a name="YOLOPV2"></a>
+### 3.7.YOLOPV2 
+Please read Readme.MD file under ALGORITHMS/YOLOPV2 folder in this repository
+
 
 
 <a name="execution"></a>

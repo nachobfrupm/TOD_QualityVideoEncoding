@@ -84,7 +84,9 @@ Please read Readme.MD file under ALGORITHMS/VMAF folder in this repository
 
 <a name="psnr_setup"></a>
 ### 3.2.PSNR 
-Please read Readme.MD file under ALGORITHMS/PSNR folder in this repository
+PSNR is part of modern versions of ffmpeg  
+A way to obtain the PSNR value of one video compared to other is the following one
+PSNR_VALUE=$(ffmpeg -i ${FIRST_MP4_FILE} -i ${SECOND_MP4_FILE} -lavfi psnr=stats_file=${TMP_PSNR_FILE} -f null - 2>&1 |grep Parsed|cut -d ":" -f5|cut -d " " -f1|tail -1) 
 
 <a name="itup12043"></a>
 ### 3.3.ITU-P.1204.3

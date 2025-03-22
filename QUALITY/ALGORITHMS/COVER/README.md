@@ -7,10 +7,13 @@ https://github.com/vztu/COVER
 
  
 
-Installing COVER should be carefully done. 
+Installing COVER should be carefully done.
+First of all , a virtualenv should be created
+virtualenv cover  
+source cover/bin/activate  
+
 
 Weights file should be obtained from Release/Model bracnh at:  
-
 https://github.com/vztu/COVER/blob/release/Model/COVER.pth 
 
  
@@ -28,7 +31,7 @@ charset-normalizer       3.3.2
 click                    8.1.7  
 colorama                 0.4.6  
 contourpy                1.3.0  
-cover                    1.0.0                 /media/xruser/REMOTEDRIVING/TOD/TESIS/QUALITY2.0/ALGORITHMS/COVER/COVER  
+cover                    1.0.0                 
 cycler                   0.12.1  
 decord                   0.6.0  
 docker-pycreds           0.4.0  

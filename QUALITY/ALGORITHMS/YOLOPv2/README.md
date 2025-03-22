@@ -1,6 +1,7 @@
-INSTALLATION INSTRUCIONS for YOLOPV2
-=========================================
-cd .. # From repo root dir
+INSTALLATION INSTRUCIONS for YOLOPV2   
+=========================================  
+# From this directory  
+cd ..  
 git clone https://github.com/CAIC-AD/YOLOPv2.git 
 cd YOLOPV2 
 # Create VirtualEnv 

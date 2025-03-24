@@ -153,6 +153,12 @@ Correlation Matrix of Video Quality Metrics and Object Detection for 216 sequenc
 SI-TI Scatter Plot of all sequences
 ![all_si_ti](https://github.com/user-attachments/assets/dcf6b836-ad44-4f11-bed0-41cef83f04f3)
 
+Rendered Scatter plots of all magnitudes against bitrate
+![BUSES_PCT](https://github.com/user-attachments/assets/87b9963d-91c6-40d5-a3d5-43f4ed15bf34) ![CARS_PCT](https://github.com/user-attachments/assets/9492cc95-2fc4-4e81-aeed-2a3cf1ed983d) 
+![MOTORCYCLES_PCT](https://github.com/user-attachments/assets/b70775e1-139c-4032-aaff-e50ac1b98c92)
+
+
+
 
 ## License  
 

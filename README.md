@@ -140,12 +140,16 @@ import sys
 
 <a name="description"></a>
 ## 5. Description of Additional Scripts
+<br />
 
 <a name="paper"></a>
 ## 6. Associated Paper
+<br />
 
 <a name="results"></a>
 ## 7.Results for Selected Datasets
+All CSV files at every level can be found in this repository under the DATASET directory  
+<br />
 Correlation Matrix of Video Quality Metrics and Object Detection for 216 sequences encoded at 11 bitrates
 
 ![6_correlation_matrix](https://github.com/user-attachments/assets/22faa34c-f6eb-476a-9852-5f4d5f937ed1)

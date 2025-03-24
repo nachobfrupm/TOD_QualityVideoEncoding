@@ -155,7 +155,6 @@ SI-TI Scatter Plot of all sequences
 
 
 Rendered Scatter plots of all magnitudes against bitrate
-![alt-text-1](https://github.com/user-attachments/assets/87b9963d-91c6-40d5-a3d5-43f4ed15bf34 "title-1") ![alt-text-2]([image2.png](https://github.com/user-attachments/assets/9492cc95-2fc4-4e81-aeed-2a3cf1ed983d) "title-2")
 
 
 ![BUSES_PCT](https://github.com/user-attachments/assets/87b9963d-91c6-40d5-a3d5-43f4ed15bf34) ![CARS_PCT](https://github.com/user-attachments/assets/9492cc95-2fc4-4e81-aeed-2a3cf1ed983d) 

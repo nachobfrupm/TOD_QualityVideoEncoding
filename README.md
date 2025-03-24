@@ -154,44 +154,54 @@ SI-TI Scatter Plot of all sequences
 ![all_si_ti](https://github.com/user-attachments/assets/dcf6b836-ad44-4f11-bed0-41cef83f04f3)
 
 
-Rendered Scatter plots of all magnitudes against bitrate
+Rendered Scatter plots of all magnitudes against bitrate  
+
+Object Detection Metrics for all datasets and bitrates ( LD_PCT means Lane Detection Degradation (0-1) )
+
 <p float="left">
   <img src="https://github.com/user-attachments/assets/87b9963d-91c6-40d5-a3d5-43f4ed15bf34" width="320" />
   <img src="https://github.com/user-attachments/assets/9492cc95-2fc4-4e81-aeed-2a3cf1ed983d" width="320" /> 
   <img src="https://github.com/user-attachments/assets/b70775e1-139c-4032-aaff-e50ac1b98c92" width="320" />
 </p>
 
-
-![LD_PCT](https://github.com/user-attachments/assets/21d48d95-9d7b-49ef-b9ed-4a8823ebede0)
-
-![PERSONS_PCT](https://github.com/user-attachments/assets/86af8d1a-0f84-4860-9a3b-d20bbc0a4609)
-
-![TRAFFIC_LIGHTS_PCT](https://github.com/user-attachments/assets/589b8f9f-f862-4cb7-911f-e1a8c6d81100)
-
-![COVER_ASC](https://github.com/user-attachments/assets/742c4a9f-7f81-4309-ac33-484cf798dd6a)
-
-![COVER_FSC](https://github.com/user-attachments/assets/69f872fc-53d9-4a9b-bef8-4658d9089006)
-
-![COVER_SSC](https://github.com/user-attachments/assets/449ed2a9-8dcd-4cdd-85b3-396d068a828d)
-
-![COVER_TSC](https://github.com/user-attachments/assets/b6fde0f1-7bf9-4d39-a34c-e2e471c7d4a9)
+<p float="left">
+  <img src="https://github.com/user-attachments/assets/21d48d95-9d7b-49ef-b9ed-4a8823ebede0" width="320" />
+  <img src="https://github.com/user-attachments/assets/86af8d1a-0f84-4860-9a3b-d20bbc0a4609" width="320" /> 
+  <img src="https://github.com/user-attachments/assets/589b8f9f-f862-4cb7-911f-e1a8c6d81100" width="320" />
+</p>
 
 
-![EVCA_SC_PCT](https://github.com/user-attachments/assets/629b9515-9ae5-4b70-85f5-b08f592c503b)
+Video Quality Metrics for all datasets and bitrates ( _PCT prefix indicates degradation compared to master quality )
 
-![EVCA_TC_PCT](https://github.com/user-attachments/assets/6496cd8c-fcde-49e6-9a0a-aecdcf6696b9)
+<p float="left">
+  <img src="https://github.com/user-attachments/assets/742c4a9f-7f81-4309-ac33-484cf798dd6a" width="320" />
+  <img src="https://github.com/user-attachments/assets/69f872fc-53d9-4a9b-bef8-4658d9089006" width="320" /> 
+  <img src="https://github.com/user-attachments/assets/449ed2a9-8dcd-4cdd-85b3-396d068a828d" width="320" />
+  
+</p>
 
-![P1204_3_MOS](https://github.com/user-attachments/assets/db953cfc-1d9a-486c-945d-325dc3efc839)
+<p float="left">
+  <img src="https://github.com/user-attachments/assets/b6fde0f1-7bf9-4d39-a34c-e2e471c7d4a9" width="320" />
+  <img src="https://github.com/user-attachments/assets/629b9515-9ae5-4b70-85f5-b08f592c503b" width="320" /> 
+  <img src="https://github.com/user-attachments/assets/6496cd8c-fcde-49e6-9a0a-aecdcf6696b9" width="320" />
+</p>
 
-![SI_PCT](https://github.com/user-attachments/assets/8dd1bbf3-a220-4583-b41b-d05a14678e29)
 
-![TI_PCT](https://github.com/user-attachments/assets/9f7bb37e-389a-4a7e-a157-b56089b2aec7)
+<p float="left">
+  <img src="https://github.com/user-attachments/assets/db953cfc-1d9a-486c-945d-325dc3efc839" width="320" />
+  <img src="https://github.com/user-attachments/assets/8dd1bbf3-a220-4583-b41b-d05a14678e29" width="320" /> 
+  <img src="https://github.com/user-attachments/assets/9f7bb37e-389a-4a7e-a157-b56089b2aec7" width="320" />
+</p>
 
-![VCA_E_PCT](https://github.com/user-attachments/assets/1b3d826d-7839-4ad0-a107-dcab15759319)
 
-![VCA_H_PCT](https://github.com/user-attachments/assets/8ff0272f-523a-46da-b406-9d778bd1092f)
+<p float="left">
+  <img src="https://github.com/user-attachments/assets/1b3d826d-7839-4ad0-a107-dcab15759319" width="320" />
+  <img src="https://github.com/user-attachments/assets/8ff0272f-523a-46da-b406-9d778bd1092f" width="320" /> 
+  <img src="https://github.com/user-attachments/assets/858982f4-53da-440f-a2d4-7096f55e7964" width="320" />
+</p>
 
-![VMAF](https://github.com/user-attachments/assets/858982f4-53da-440f-a2d4-7096f55e7964)
+
+
 
 
 

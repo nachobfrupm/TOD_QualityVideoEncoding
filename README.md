@@ -24,6 +24,7 @@ Based on shell and python scripts
 4. [Execution and Data Collection](#execution)  
 5. [Description of Additional Scripts](#description)  
 6. [Assoociated Paper](#paper)
+7. [Results for Selected Datasets](#results)
 
 
 <a name="introduction"></a>
@@ -143,18 +144,17 @@ import sys
 <a name="paper"></a>
 ## 6. Associated Paper
 
+<a name="results"></a>
+## 7.Results for Selected Datasets
+Correlation Matrix of Video Quality Metrics and Object Detection for 216 sequences encoded at 11 bitrates
 
+![6_correlation_matrix](https://github.com/user-attachments/assets/22faa34c-f6eb-476a-9852-5f4d5f937ed1)
+
+SI-TI Scatter Plot of all sequences
+![all_si_ti](https://github.com/user-attachments/assets/dcf6b836-ad44-4f11-bed0-41cef83f04f3)
 
 
 ## License  
-[MIT](https://choosealicense.com/licenses/mit/)  
 
-## Usage/Examples  
-~~~javascript  
-  import Component from 'my-project'
 
-  console.log("Hello World")
-~~~  
 
-## Screenshots  
-![App Screenshot](https://lanecdr.org/wp-content/uploads/2019/08/placeholder.png)  

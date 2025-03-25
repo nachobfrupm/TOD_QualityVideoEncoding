@@ -167,9 +167,9 @@ Rendered Scatter plots of all magnitudes against bitrate
 Object Detection Metrics for all datasets and bitrates ( LD_PCT means Lane Detection Degradation (0-1) )
 
 <p float="left">
-  <img src="https://github.com/user-attachments/assets/87b9963d-91c6-40d5-a3d5-43f4ed15bf34" width="300" />
-  <img src="https://github.com/user-attachments/assets/9492cc95-2fc4-4e81-aeed-2a3cf1ed983d" width="300" /> 
-  <img src="https://github.com/user-attachments/assets/b70775e1-139c-4032-aaff-e50ac1b98c92" width="300" />
+  <img src="https://github.com/user-attachments/assets/87b9963d-91c6-40d5-a3d5-43f4ed15bf34" width="320" />
+  <img src="https://github.com/user-attachments/assets/9492cc95-2fc4-4e81-aeed-2a3cf1ed983d" width="320" /> 
+  <img src="https://github.com/user-attachments/assets/b70775e1-139c-4032-aaff-e50ac1b98c92" width="320" />
 </p>
 
 <p float="left">

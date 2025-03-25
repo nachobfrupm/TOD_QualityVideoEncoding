@@ -82,6 +82,8 @@ cp <preprocess_directory> /home/user/data/MyIndividualSequence/themasterfile.mp4
 <a name="vmaf_setup"></a>
 ### 3.1.VMAF 
 Please read Readme.MD file under ALGORITHMS/VMAF folder in this repository
+[a relative link](QUALITY/ALGORITHM/VMAF/README.md)
+
 
 <a name="psnr_setup"></a>
 ### 3.2.PSNR 

@@ -101,41 +101,35 @@ echo $PSNR_VALUE
 
 <a name="itup12043"></a>
 ### 3.3.ITU-P.1204.3
-Please read Readme.MD file under ALGORITHMS/bitstream_mode3_p1204_3 folder in this repository
+Please read Readme.MD file under [ALGORITHMS/bitstream_mode3_p1204_3](QUALITY/ALGORITHMS/bitstream_mode3_p1204_3/README.md) folder in this repository
 
 <a name="VCA"></a>
 ### 3.4.VCA  
-Please read Readme.MD file under ALGORITHMS/VCA folder in this repository
+Please read Readme.MD file under [ALGORITHMS/VCA](QUALITY/ALGORITHMS/VCA/README.md) folder in this repository
+
 
 <a name="EVCA"></a>
 ### 3.5.EVCA  
-Please read Readme.MD file under ALGORITHMS/EVCA folder in this repository
+Please read Readme.MD file under [ALGORITHMS/EVCA](QUALITY/ALGORITHMS/EVCA/README.md) folder in this repository
 
 <a name="COVER"></a>
 ### 3.6.COVER 
-Please read Readme.MD file under ALGORITHMS/COVER folder in this repository
+Please read Readme.MD file under [ALGORITHMS/COVER](QUALITY/ALGORITHMS/COVER/README.md) folder in this repository
 
 <a name="YOLOV7"></a>
 ### 3.7.YOLOV7 
-Please read Readme.MD file under ALGORITHMS/YOLOV7 folder in this repository
+Please read Readme.MD file under [ALGORITHMS/YOLOV7](QUALITY/ALGORITHMS/YOLOV7/README.md) folder in this repository
 
 <a name="YOLOPV2"></a>
 ### 3.8.YOLOPV2 
-Please read Readme.MD file under ALGORITHMS/YOLOPV2 folder in this repository
+Please read Readme.MD file under [ALGORITHMS/YOOPV2](QUALITY/ALGORITHMS/YOLOPV2/README.md) folder in this repository
 
 <a name="PYTHONLIBS"></a>
 ### 3.9.PYTHON LIBRARIES 
-The tools described above will run in their own virtualenvironment and the instruction to install the required packages can be found either in the README.MD file under them or in the original tool 
-
-from tabulate import tabulate
-import csv
-import cv2
-import matplotlib.pyplot as plt
-import numpy as np
-import pandas as pd
-import pyarrow.feather as feather
-import seaborn as sns
-import sys
+The tools described above will run in their own virtualenvironment.
+For the rest of common python scripts the following packages will be required
+<br />
+tabulate csv cv2 matplotlib numpy pandas pyarrow.feather seaborn sys
 
 
 

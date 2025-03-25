@@ -81,8 +81,8 @@ cp <preprocess_directory> /home/user/data/MyIndividualSequence/themasterfile.mp4
 ## 3. External Tools Setup
 <a name="vmaf_setup"></a>
 ### 3.1.VMAF 
-Please read Readme.MD file under ALGORITHMS/VMAF folder in this repository
-[a relative link](QUALITY/ALGORITHM/VMAF/README.md)
+Please read Readme.MD file under [ALGORITHMS/VMAF](QUALITY/ALGORITHMS/VMAF/README.md) folder in this repository
+
 
 
 <a name="psnr_setup"></a>

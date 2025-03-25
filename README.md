@@ -88,8 +88,16 @@ Please read Readme.MD file under [ALGORITHMS/VMAF](QUALITY/ALGORITHMS/VMAF/READM
 <a name="psnr_setup"></a>
 ### 3.2.PSNR 
 PSNR is part of modern versions of ffmpeg  
-A way to obtain the PSNR value of one video compared to other is the following one
+A way to check that PSNR plugin is part of ffmpeg can be trying to execute it as per the following instructions
+
+   ~~~shell
+export FIRST_MP4_FILE=your_master_mp4.mp4
+export SECOND_MP4_FILE=your_transcoded_mp4.mp4
+export TMP_PSNR_FILE/tmp/psnr.txt
 PSNR_VALUE=$(ffmpeg -i ${FIRST_MP4_FILE} -i ${SECOND_MP4_FILE} -lavfi psnr=stats_file=${TMP_PSNR_FILE} -f null - 2>&1 |grep Parsed|cut -d ":" -f5|cut -d " " -f1|tail -1) 
+echo $PSNR_VALUE 
+   ~~~
+
 
 <a name="itup12043"></a>
 ### 3.3.ITU-P.1204.3

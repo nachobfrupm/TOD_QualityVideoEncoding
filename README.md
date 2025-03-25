@@ -93,7 +93,7 @@ A way to check that PSNR plugin is part of ffmpeg can be trying to execute it as
    ~~~shell
 export FIRST_MP4_FILE=your_master_mp4.mp4
 export SECOND_MP4_FILE=your_transcoded_mp4.mp4
-export TMP_PSNR_FILE/tmp/psnr.txt
+export TMP_PSNR_FILE=/tmp/psnr.txt
 PSNR_VALUE=$(ffmpeg -i ${FIRST_MP4_FILE} -i ${SECOND_MP4_FILE} -lavfi psnr=stats_file=${TMP_PSNR_FILE} -f null - 2>&1 |grep Parsed|cut -d ":" -f5|cut -d " " -f1|tail -1) 
 echo $PSNR_VALUE 
    ~~~

@@ -11,7 +11,7 @@ mkdir BIN
 cd BIN
 wget https://github.com/Netflix/vmaf/releases/download/v2.3.1/vmaf
 chmod 755 *
-   ~~~shell
+   ~~~
 Once downloaded , please be sure that vmaf binary is correclty referenced in the file SCRIPTS/BASH/phase3_vmaf.sh
 
 

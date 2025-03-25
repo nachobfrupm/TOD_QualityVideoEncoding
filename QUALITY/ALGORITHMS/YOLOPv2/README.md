@@ -1,5 +1,6 @@
 INSTALLATION INSTRUCIONS for YOLOPV2   
 =========================================  
+   ~~~shell
 #From this directory  
 cd ..  
 git clone https://github.com/CAIC-AD/YOLOPv2.git 
@@ -24,7 +25,7 @@ pip3 install torchvision
  python3 demo.py  
  mkdir -p data/weights/  
  mv yolopv2.pt data/weights/  
-
+   ~~~
 #Use lane_detector.py instead of demo.py
 
 

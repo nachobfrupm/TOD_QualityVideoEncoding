@@ -1,5 +1,8 @@
 INSTALLATION INSTRUCTIONS
 ===========================================
+Please replace the name of the YUV file with the real name of the YUV raw video file you want to analyze.
+
+   ~~~shell
 git clone https://github.com/cd-athena/EVCA.git  
 cd EVCA  
 virtualenv evca_env  
@@ -7,9 +10,9 @@ source evca_env/bin/activate
 pip3 install -r requirements.txt   
 python3 main.py -i /home/xruser/TOD/TESIS/QUALITY/INPUT/Sequence01_Stopped.ts.yuv -r "1920x1080"  -f 30  -c out.csv   
 more out_EVCA.csv  
- 
+    ~~~
 
- 
+Example of output 
 
 B,SC,TC,TC2  
 0.23845656,27.495571,0.0,0.0  

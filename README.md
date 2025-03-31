@@ -211,10 +211,7 @@ Video Quality Metrics for all datasets and bitrates ( _PCT prefix indicates degr
 
 
 
-
-
-
 ## License  
 
-
+Please see file  [License.MD](LICENSE.md)
 

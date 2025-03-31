@@ -150,6 +150,7 @@ AUX: Scripts used to execute incrementally some steps when migrating versions. P
 DATASET: Scripts specific to given datasets. They are used to automate extractioon of master video from input datasets. <br />
 EXPERIMENTAL: Not stable scripts used for future evolutions of the framework  <br />
 MISC: Miscellaneous scripts, not critical for the main flow  <br />
+OLD_VERSIONS: Old versions of scripts used in SCRIPTS/BASH directory. Kept for historical reasons. Do not use them.  <br />
 <br />
 
 

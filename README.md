@@ -122,7 +122,7 @@ Please read Readme.MD file under [ALGORITHMS/YOLOV7](QUALITY/ALGORITHMS/YOLOV7/R
 
 <a name="YOLOPV2"></a>
 ### 3.8.YOLOPV2 
-Please read Readme.MD file under [ALGORITHMS/YOLOPV2](QUALITY/ALGORITHMS/YOLOPV2/README.md) folder in this repository
+Please read Readme.MD file under [ALGORITHMS/YOLOPv2](QUALITY/ALGORITHMS/YOLOPv2/README.md) folder in this repository
 
 <a name="PYTHONLIBS"></a>
 ### 3.9.PYTHON LIBRARIES 

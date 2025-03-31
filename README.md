@@ -23,8 +23,9 @@ Based on shell and python scripts
    
 4. [Execution and Data Collection](#execution)  
 5. [Description of Additional Scripts](#description)  
-6. [Assoociated Paper](#paper)
 7. [Results for Selected Datasets](#results)
+8. [License](#license)
+
 
 
 <a name="introduction"></a>
@@ -144,14 +145,16 @@ tabulate csv cv2 matplotlib numpy pandas pyarrow.feather seaborn sys
 
 <a name="description"></a>
 ## 5. Description of Additional Scripts
+Additional bash scripts are placed in 5 different directories under SCRIPTS/BASH directory
+AUX: Scripts used to execute incrementally some steps when migrating versions. Please do not execute them. They might cause incosistencies. 
+DATASET: Scripts specific to given datasets. They are used to automate extractioon of master video from input datasets. 
+EXPERIMENTAL: Not stable scripts used for future evolutions of the framework  
+MISC: Miscellaneous scripts, not critical for the main flow  
 <br />
 
-<a name="paper"></a>
-## 6. Associated Paper
-<br />
 
 <a name="results"></a>
-## 7.Results for Selected Datasets
+## 6.Results for Selected Datasets
 All CSV files at every level can be found in this repository under the DATASET directory  
 <br />
 Correlation Matrix of Video Quality Metrics and Object Detection for 216 sequences encoded at 11 bitrates
@@ -210,8 +213,9 @@ Video Quality Metrics for all datasets and bitrates ( _PCT prefix indicates degr
 
 
 
+<a name="license"></a>
 
-## License  
+## 7.License
 
 Please see file  [License.MD](LICENSE.md)
 

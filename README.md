@@ -145,11 +145,11 @@ tabulate csv cv2 matplotlib numpy pandas pyarrow.feather seaborn sys
 
 <a name="description"></a>
 ## 5. Description of Additional Scripts
-Additional bash scripts are placed in 5 different directories under SCRIPTS/BASH directory
-AUX: Scripts used to execute incrementally some steps when migrating versions. Please do not execute them. They might cause incosistencies. 
-DATASET: Scripts specific to given datasets. They are used to automate extractioon of master video from input datasets. 
-EXPERIMENTAL: Not stable scripts used for future evolutions of the framework  
-MISC: Miscellaneous scripts, not critical for the main flow  
+Additional bash scripts are placed in 5 different directories under SCRIPTS/BASH directory  <br />
+AUX: Scripts used to execute incrementally some steps when migrating versions. Please do not execute them. They might cause incosistencies. <br />
+DATASET: Scripts specific to given datasets. They are used to automate extractioon of master video from input datasets. <br />
+EXPERIMENTAL: Not stable scripts used for future evolutions of the framework  <br />
+MISC: Miscellaneous scripts, not critical for the main flow  <br />
 <br />
 
 

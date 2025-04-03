@@ -12,17 +12,18 @@ Based on shell and python scripts
    2.3. [Processed Dataset](#processed) <br/>
 3. [External Tools Setup](#setup_ext)  
     3.1. [VMAF](#vmaf_setup)  
-    3.2. [PSNR](#psnr_setup)   
-    3.3. [ITU-P.1204.3](#itup12043)   
-    3.4. [VCA](#VCA)   
-    3.5. [EVCA](#EVCA)  
-    3.6. [COVER](#COVER)   
-    3.7. [YOLOV7](#YOLOV7)   
-    3.8. [YOLOPV2](#YOLOPV2)   
-    3.9. [PYTHON LIBRARIES](#PYTHONLIBS)   
+    3.2. [PSNR](#psnr_setup)
+    3.3. [SI-TI Tools](#siti)   
+    3.4. [ITU-P.1204.3](#itup12043)   
+    3.5. [VCA](#VCA)   
+    3.6. [EVCA](#EVCA)  
+    3.7. [COVER](#COVER)   
+    3.8. [YOLOV7](#YOLOV7)   
+    3.0. [YOLOPV2](#YOLOPV2)   
+    3.10. [PYTHON LIBRARIES](#PYTHONLIBS)   
    
-4. [Execution and Data Collection](#execution)  
-5. [Description of Additional Scripts](#description)  
+5. [Execution and Data Collection](#execution)  
+6. [Description of Additional Scripts](#description)  
 7. [Results for Selected Datasets](#results)
 8. [License](#license)
 
@@ -99,34 +100,37 @@ PSNR_VALUE=$(ffmpeg -i ${FIRST_MP4_FILE} -i ${SECOND_MP4_FILE} -lavfi psnr=stats
 echo $PSNR_VALUE 
    ~~~
 
+<a name="siti"></a>
+### 3.3.ITU-P.1204.3
+Please read Readme.MD file under [ALGORITHMS/SITI](QUALITY/ALGORITHMS/SITI/README.md) folder in this repository
 
 <a name="itup12043"></a>
-### 3.3.ITU-P.1204.3
+### 3.4.ITU-P.1204.3
 Please read Readme.MD file under [ALGORITHMS/bitstream_mode3_p1204_3](QUALITY/ALGORITHMS/bitstream_mode3_p1204_3/README.md) folder in this repository
 
 <a name="VCA"></a>
-### 3.4.VCA  
+### 3.5.VCA  
 Please read Readme.MD file under [ALGORITHMS/VCA](QUALITY/ALGORITHMS/VCA/README.md) folder in this repository
 
 
 <a name="EVCA"></a>
-### 3.5.EVCA  
+### 3.6.EVCA  
 Please read Readme.MD file under [ALGORITHMS/EVCA](QUALITY/ALGORITHMS/EVCA/README.md) folder in this repository
 
 <a name="COVER"></a>
-### 3.6.COVER 
+### 3.7.COVER 
 Please read Readme.MD file under [ALGORITHMS/COVER](QUALITY/ALGORITHMS/COVER/README.md) folder in this repository
 
 <a name="YOLOV7"></a>
-### 3.7.YOLOV7 
+### 3.8.YOLOV7 
 Please read Readme.MD file under [ALGORITHMS/YOLOV7](QUALITY/ALGORITHMS/YOLOV7/README.md) folder in this repository
 
 <a name="YOLOPV2"></a>
-### 3.8.YOLOPV2 
+### 3.9.YOLOPV2 
 Please read Readme.MD file under [ALGORITHMS/YOLOPv2](QUALITY/ALGORITHMS/YOLOPv2/README.md) folder in this repository
 
 <a name="PYTHONLIBS"></a>
-### 3.9.PYTHON LIBRARIES 
+### 3.10.PYTHON LIBRARIES 
 The tools described above will run in their own virtualenvironment.
 For the rest of common python scripts the following packages will be required
 <br />

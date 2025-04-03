@@ -13,7 +13,7 @@ Based on shell and python scripts
 3. [External Tools Setup](#setup_ext)  
     3.1. [VMAF](#vmaf_setup)  
     3.2. [PSNR](#psnr_setup)
-    3.3. [SI-TI Tools](#siti)   <br/>
+    3.3. [SI-TI Tools](#siti)   
     3.4. [ITU-P.1204.3](#itup12043)   
     3.5. [VCA](#VCA)   
     3.6. [EVCA](#EVCA)  
@@ -101,7 +101,7 @@ echo $PSNR_VALUE
    ~~~
 
 <a name="siti"></a>
-### 3.3.ITU-P.1204.3
+### 3.3.SI-TI Tools   
 Please read Readme.MD file under [ALGORITHMS/SITI](QUALITY/ALGORITHMS/SITI/README.md) folder in this repository
 
 <a name="itup12043"></a>

@@ -13,7 +13,7 @@ Based on shell and python scripts
 3. [External Tools Setup](#setup_ext)  
     3.1. [VMAF](#vmaf_setup)  
     3.2. [PSNR](#psnr_setup)
-    3.3. [SI-TI Tools](#siti)      <br/>
+    3.3. [SI-TI Tools](#siti)   <br/>
     3.4. [ITU-P.1204.3](#itup12043)   
     3.5. [VCA](#VCA)   
     3.6. [EVCA](#EVCA)  
